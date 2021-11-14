@@ -1,0 +1,22 @@
+body{
+    margin: 0;
+}
+
+.books{
+    pointer-events: auto;
+}
+.desc-box>div>p{
+    display: inline;
+}
+.book-desc{
+    overflow: hidden;
+    height: 7em;										
+}
+.book-container{
+    pointer-events: none;
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    width: 100%;
+    height: 10vw;
+    align-items: center;
+}

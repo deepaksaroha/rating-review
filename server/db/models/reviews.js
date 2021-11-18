@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import { Schema } from 'mongoose'
+const mongoose = require( 'mongoose')
+const { Schema } = require( 'mongoose')
 
 const reviewSchema = new Schema({
     reviewid:{
@@ -14,6 +14,10 @@ const reviewSchema = new Schema({
         type: String,
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     rating:{
         type: Number,
         required: true,
@@ -23,7 +27,10 @@ const reviewSchema = new Schema({
     review:{
         type: String,
     },
-    date: Date.now,
+    date: {
+        type: Date,
+        default: Date.now
+    },
     upvoteCount:{
         type: Number,
         default: 0

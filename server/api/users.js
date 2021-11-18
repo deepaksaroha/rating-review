@@ -1,6 +1,6 @@
-import express from 'express'
-import user from '../db/models/users'
-import bcrypt from 'bcryptjs'
+const express = require( 'express')
+const user = require( '../db/models/users')
+const bcrypt = require( 'bcryptjs')
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get('/', (req, res, next)=>{
         }
 
         req.session.userId = userData._id;
-        res.status(200).send({emailId: userData.emailId});
+        res.status(200).send({userId: userData.userId});
     })
     .catch(error=>{
         res.status(500).send({error: 'Internal Server Error'});
@@ -59,7 +59,7 @@ router.post('/', (req, res, next)=>{
     user.findOne({'emailId': emailId})
     .then(user=>{
         if(user){
-            res.status(400).send({error: 'A user is already registered with this email'});
+            res.status(409).send({error: 'A user is already registered with this email', exists: true});
             return;
         }
 

@@ -1,7 +1,6 @@
-import express from 'express'
-import review from '../db/models/reviews'
-import book from '../db/models/books'
-import uuid from 'uuid'
+const express = require( 'express')
+const review = require( '../db/models/reviews')
+const uuid = require( 'uuid')
 
 
 const router = express.Router();
@@ -19,7 +18,7 @@ router.post('/', (req, res, next)=>{
         return;
     }
 
-    const { rating, review, bookId, userId } = req.body;
+    const { rating, review, bookId, userId, userName } = req.body;
 
     if(!rating || !bookId || !userId){
         res.status(400).send({error: 'Information incomplete'});
@@ -28,9 +27,9 @@ router.post('/', (req, res, next)=>{
 
     const reviewId = uuid.v4;
 
-    let reviewData = new review({reviewId, rating, bookId, userId});
+    let reviewData = new review({reviewId, rating, bookId, userId, userName});
     if(review){
-        reviewData = new review({reviewId, rating, review, bookId, userId});
+        reviewData = new review({reviewId, rating, review, bookId, userId, userName});
     }
 
     reviewData.save()
@@ -66,7 +65,7 @@ router.get('/:bookId-:userId', (req, res, next)=>{
     review.findOne({bookId: req.params.bookId, userId: req.params.userId})
     .then(reviewData=>{
         if(!reviewData){
-            res.status(400).send({error: 'user did not review this book'});
+            res.status(404).send({error: 'user did not review this book'});
             return;
         }
 
@@ -97,10 +96,10 @@ router.put('/:reviewId', (req, res, next)=>{
         return;
     }
 
-   let updateObject = {rating: rating};
-   if(review){
-       updateObject = {'rating': rating, 'review': review}
-   }
+    let updateObject = {'rating': rating};
+    if(review){
+        updateObject = {'rating': rating, 'review': review}
+    }
 
     review.findOneAndUpdate({bookId: req.params.bookId, userId: req.params.userId}, updateObject)
     .then((review)=>{

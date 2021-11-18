@@ -1,7 +1,7 @@
-import express from 'express'
-import books from './books'
-import reviews from './reviews'
-import users from './users'
+const express = require('express')
+const books = require('./books')
+const reviews = require('./reviews')
+const users = require('./users')
 
 const router = express.Router();
 

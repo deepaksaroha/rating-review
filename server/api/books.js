@@ -1,5 +1,5 @@
-import express from 'express'
-import book from '../db/models/books'
+const express = require( 'express')
+const book = require( '../db/models/books.js')
 
 const router = express.Router();
 

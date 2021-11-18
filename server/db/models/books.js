@@ -1,5 +1,5 @@
-import mongoose from 'mongoose'
-import { Schema } from 'mongoose'
+const mongoose = require( 'mongoose')
+const { Schema } = require( 'mongoose')
 
 
 const bookSchema = new Schema({
@@ -22,6 +22,7 @@ const bookSchema = new Schema({
     },
     description:{
         type: String,
+        maxlength: 350
     },
     published:{
         type: Date,

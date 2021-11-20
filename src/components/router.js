@@ -1,7 +1,11 @@
 import React from 'react'
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-dom'
+import Home from './home';
+import Book from './book';
+import Login from './login';
+import Signup from './signup';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-class Router extends React.Component {
+class AppRouter extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -13,16 +17,18 @@ class Router extends React.Component {
 
     render(){
         return (
-            <React.Fragment>
+            <Router>
                 <Switch>
                     <Route exact path='/' component={Home} />
                     <Route path='/home' component={Home} />
                     <Route path='/book/:bookId' component={Book} />
-                    <Route path='/review/:bookId' component={Reviews} />
                     <Route path='/login' component={Login} />
-                    <Route path='/signup' component={Register} />
+                    <Route path='/signup' component={Signup} />
                 </Switch>
-            </React.Fragment>
+            </Router>
+            
         )
     }
 }
+
+export default AppRouter;

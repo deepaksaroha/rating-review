@@ -6,7 +6,8 @@ const router = express.Router();
 
 
 //login user
-router.get('/', (req, res, next)=>{
+router.put('/', (req, res, next)=>{
+
     const { emailId, password } = req.body;
     
     if(!emailId){
@@ -22,7 +23,7 @@ router.get('/', (req, res, next)=>{
     user.findOne({'emailId': emailId})
     .then(userData=>{
         if(!userData){
-            res.status(400).send({error: 'User is not registered'});
+            res.status(401).send({error: 'User is not registered'});
             return;
         }
 
@@ -34,7 +35,7 @@ router.get('/', (req, res, next)=>{
         }
 
         req.session.userId = userData._id;
-        res.status(200).send({userId: userData.userId});
+        res.status(200).send({userId: userData._id});
     })
     .catch(error=>{
         res.status(500).send({error: 'Internal Server Error'});
@@ -57,15 +58,16 @@ router.post('/', (req, res, next)=>{
     }
 
     user.findOne({'emailId': emailId})
-    .then(user=>{
-        if(user){
+    .then(usr=>{
+        if(usr){
             res.status(409).send({error: 'A user is already registered with this email', exists: true});
             return;
         }
 
         const passwordHash = bcrypt.hashSync(password);
 
-        const userData = new user({userName, emailId, password: passwordHash});
+        const userData = new user({userName: userName, emailId: emailId, password: passwordHash});
+
 
         userData.save()
         .then(()=>{
@@ -88,6 +90,20 @@ router.post('/', (req, res, next)=>{
 router.delete('/', (req, res, next)=>{
     delete req.session.userId;
     res.status(204).send();
+})
+
+
+//get userName with user id
+router.get('/:userId', (req, res, next)=>{
+
+    user.findOne({'_id': req.params.userId})
+    .then(usr=>{
+        res.status(200).send({userName: usr.userName})
+    })
+    .catch(error=>{
+        res.status(500).send({error: 'Internal Server Error'});
+        return;
+    })
 })
 
 module.exports = router;

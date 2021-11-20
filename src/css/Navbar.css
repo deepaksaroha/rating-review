@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+}
+
+.navbar{
+    display: grid;
+    grid-template-columns: 200px 300px 200px;
+    justify-content: space-between;
+    font-size: 20px;
+    align-items: center;
+    color: rgb(197, 160, 160);
+    background: url('../images/bg.png');
+    background-position: center;
+    background-size: cover;
+}
+.navbar>*{
+    margin: 0px 20px;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: inherit;
+}
+
+#site-name{
+    font-size: 30px;
+}
+
+#navbar-logout-btn, .login-btn{
+    width: fit-content;
+    font-size: inherit;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white !important;
+}
+
+#navbar-logout-btn{
+    background-color: rgb(158, 47, 47);
+}
+
+.login-btn{
+    background-color: rgb(36, 136, 53);
+    text-decoration: none;
+}

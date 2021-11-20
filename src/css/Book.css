@@ -1,0 +1,126 @@
+body{
+    margin: 0;
+}
+
+.book-outer-box p{
+    margin: 5px;
+}
+
+.book-outer-box{
+    width: 60%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.book-outer-box>div{
+    padding: 20px;
+}
+
+.book-detail-box{
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.book-reviews-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 50px;
+}
+
+.book-thumbnail{
+    width: 100%;
+}
+
+.book-avail-options{
+    text-align: center;
+}
+
+.book-avail-options>button{
+    border: none;
+    outline: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(40, 85, 168);
+}
+
+.book-avail-options>button:disabled{
+    background-color: rgb(103, 153, 246);;
+}
+
+.login-btn{
+    font-size: 20px;
+}
+
+.book-modify-btn{
+    color: whitesmoke;
+    font-size: 20px;
+    background-color: grey;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 20px;
+}
+
+.user-review-box{
+    border: none;
+    outline: none;
+    border: 1px solid rgb(206, 206, 206);
+    height: 100px;
+    width: 90%;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.about-book p{
+    display: inline-block;
+}
+
+#book-author{
+    font-size: 16px;
+}
+
+#book-desc{
+    font-size: 18px;
+    text-align: justify;
+}
+
+#book-title{
+    font-size: 25px;
+}
+
+.all-reviews{
+    font-size: 16px;
+}
+
+.stars-input{
+	display: none;
+}
+
+.filled-stars{
+	pointer-events: all;
+	color: rgb(253, 213, 31);
+	font-size: 250%;
+}
+
+.empty-stars{
+	pointer-events: all;
+	color: white;
+	font-size: 250%;
+}
+
+.rate-box{
+    width: fit-content;
+    padding: 0 5px;
+    background-color: grey;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 10px;
+}

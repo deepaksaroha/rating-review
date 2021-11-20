@@ -1,7 +1,5 @@
-
 const api = require('./server/api/api')
 const db = require('./server/db/db')
-
 
 const genuuid = require('uuid').v4;
 const MongoStore = require('connect-mongo')
@@ -9,12 +7,17 @@ const path = require('path');
 
 const session = require('express-session')
 const express  = require('express');
+
 const app = express();
 
 const port = process.env.PORT || 4000;
 
+
 db.connectDB()
 .then(()=>{
+
+    app.use('/api', express.json());
+
     app.use('/api', session({
         genid(){
             return genuuid();

@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from "react-router-dom";
 
-import '../css/Booktile.css'
+import '../css/Booktile'
 import kite from '../images/kite.jpg'
 
 class BookTile extends React.Component {

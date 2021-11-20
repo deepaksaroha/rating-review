@@ -1,6 +1,6 @@
-const express = require( 'express')
-const review = require( '../db/models/reviews')
-const uuid = require( 'uuid')
+const express = require('express')
+const review = require('../db/models/reviews')
+const { v4: uuidv4 } = require('uuid');
 
 
 const router = express.Router();
@@ -18,18 +18,18 @@ router.post('/', (req, res, next)=>{
         return;
     }
 
-    const { rating, review, bookId, userId, userName } = req.body;
+    const { newrating, newreview, bookId, userId} = req.body;
 
-    if(!rating || !bookId || !userId){
+    if(!newrating || !bookId || !userId){
         res.status(400).send({error: 'Information incomplete'});
         return;
     }
 
-    const reviewId = uuid.v4;
+    const reviewId = uuidv4();
 
-    let reviewData = new review({reviewId, rating, bookId, userId, userName});
-    if(review){
-        reviewData = new review({reviewId, rating, review, bookId, userId, userName});
+    let reviewData = new review({reviewid:reviewId, rating: newrating, bookid: bookId, userid: userId});
+    if(newreview){
+        reviewData = new review({reviewid:reviewId, rating: newrating, review: newreview, bookid: bookId, userid: userId});
     }
 
     reviewData.save()
@@ -40,19 +40,6 @@ router.post('/', (req, res, next)=>{
         res.status(501).send({error:'Internal server error!'});
     })
 
-})
-
-
-//get reviews for a book
-router.get('/:bookId', (req, res, next)=>{
-
-    review.find({bookId: req.params.bookId})
-    .then(reviewList=>{
-        res.status(200).send({reviewList: reviewList});
-    })
-    .catch(error=>{
-        res.status(501).send({error:'Internal server error!'});
-    })
 })
 
 //get reviews/ratings by a user for a book
@@ -69,13 +56,28 @@ router.get('/:bookId-:userId', (req, res, next)=>{
             return;
         }
 
-        res.status(200).send(reviewData);
+        res.status(200).send({reviewData: reviewData});
     })
     .catch(error=>{
         res.status(501).send({error:'Internal server error!'});
     })
 
 })
+
+
+
+//get reviews for a book
+router.get('/:bookId', (req, res, next)=>{
+
+    review.find({bookId: req.params.bookId})
+    .then(reviewList=>{
+        res.status(200).send({reviewList: reviewList});
+    })
+    .catch(error=>{
+        res.status(501).send({error:'Internal server error!'});
+    })
+})
+
 
 //update the old review by user
 router.put('/:reviewId', (req, res, next)=>{
@@ -89,16 +91,16 @@ router.put('/:reviewId', (req, res, next)=>{
         return;
     }
 
-    const { rating, review } = req.body;
+    const { newrating, newreview } = req.body;
 
-    if(!rating){
+    if(!newrating){
         res.status(401).send({error: 'Incomplete request'});
         return;
     }
 
-    let updateObject = {'rating': rating};
-    if(review){
-        updateObject = {'rating': rating, 'review': review}
+    let updateObject = {'rating': newrating};
+    if(newreview){
+        updateObject = {'rating': newrating, 'review': newreview}
     }
 
     review.findOneAndUpdate({bookId: req.params.bookId, userId: req.params.userId}, updateObject)

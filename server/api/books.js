@@ -28,7 +28,9 @@ router.get('/:bookId', (req, res, next)=>{
             return;
         }
 
-        res.status(200).send(bookData);
+
+
+        res.status(200).send({bookData});
     })
     .catch(error=>{
         res.status(501).send({error: 'Internal Server Error!'});

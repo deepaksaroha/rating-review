@@ -182,9 +182,9 @@ class BookTile extends React.Component {
                                                     <p className="book-author">by-{book.author}</p>
                                                 </div>
                                                 <div className="rating-info">
-                                                    <p>{book.avgRating}</p>
-                                                    <p>{book.ratingCount}</p>
-                                                    <p>{book.reviewCount}</p>
+                                                    <p>{starElement(null, book.avgRating)}</p>
+                                                    <p>{book.ratingCount} Ratings</p>&nbsp;
+                                                    <p>{book.reviewCount} Reviews</p>
                                                 </div>
                                             </div>
                                             <div className="book-desc">
@@ -219,7 +219,7 @@ class BookTile extends React.Component {
                                         
                                         <div className="detail-box">
                                             <p>edition: {book.edition}</p>
-                                            <p>published: {book.pub}</p>
+                                            <p>published: {new Date(book.published).getFullYear()}</p>
                                             <p>ISBN: {book.isbn}</p>
                                         </div>
                                     </div>

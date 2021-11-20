@@ -69,9 +69,10 @@ main{
 .rating-info{
 	font-family: 'Balsamiq Sans', cursive;
     font-size: 14.5px;
-    background-color: white;
+    background-color: rgb(73, 49, 49);
     padding: 10px;
     border-radius: 5px;
+	color: white;
 }
 
 .detail-box{

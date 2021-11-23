@@ -1,8 +1,8 @@
 import React from 'react'
-import Home from './home';
-import Book from './book';
-import Login from './login';
-import Signup from './signup';
+import Home from './Home';
+import Book from './Book';
+import Login from './Login';
+import Signup from './Signup';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class AppRouter extends React.Component {

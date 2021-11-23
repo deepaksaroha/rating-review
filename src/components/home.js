@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from './navbar'
-import BookTile from './bookTile'
+import Navbar from './Navbar'
+import BookTile from './BookTile'
 
 class Home extends React.Component {
     constructor(props){

@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './navbar';
+import Navbar from './Navbar';
 import '../css/Book.css'
 import Book1 from '../images/kite.jpg'
 

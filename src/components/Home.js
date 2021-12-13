@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import Navbar from './Navbar'
 import BookList from './BookList'
 
@@ -10,15 +11,27 @@ class Home extends React.Component {
         }
     }
 
-    componentDidMount(){
-        this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+    getLoginStatus=()=>{
+        axios.get('/api/users')
+        .then(response=>{
+            this.setState({
+                isLoggedIn: true
+            })
         })
+        .catch(error=>{
+            this.setState({
+                isLoggedIn: false
+            })
+        })
+    }
+
+    componentDidMount(){
+        this.getLoginStatus();
     }
 
     handleLogout =()=>{
         this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+            isLoggedIn: false
         })
     }
 

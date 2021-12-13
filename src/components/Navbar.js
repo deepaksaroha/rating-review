@@ -52,7 +52,12 @@ class Navbar extends React.Component{
                 <div className="navbar">
                     <a href="/home"><p>Home</p></a>
                     <p id="site-name">PaperPhile</p>
-                    {this.state.isLoggedIn ? <button id="navbar-logout-btn" onClick={this.handleLogout}>Logout</button> : <div><a className="login-btn" href="/login">Login</a>&nbsp;&nbsp;<a href="/signup">Signup</a></div> }
+                    {
+                        this.state.isLoggedIn ?
+                        <button id="navbar-logout-btn" onClick={this.handleLogout}>Logout</button> 
+                        : 
+                        <div><a className="login-btn" href="/login">Login</a>&nbsp;&nbsp;<a href="/signup">Signup</a></div> 
+                    }
                 </div>
             </React.Fragment>
         )

@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import '../css/Navbar.css'
 
 class Navbar extends React.Component{
@@ -9,33 +10,30 @@ class Navbar extends React.Component{
         }
     }
 
-    componentDidMount(){
-        this.setState({
-            isLoggedIn: localStorage.getItem('userId')
+    getLoginStatus=()=>{
+        axios.get('/api/users')
+        .then(response=>{
+            this.setState({
+                isLoggedIn: true
+            })
+        })
+        .catch(error=>{
+            this.setState({
+                isLoggedIn: false
+            })
         })
     }
 
+    componentDidMount(){
+        this.getLoginStatus();
+    }
+
     handleLogout = () =>{
-        const request = new Request('/api/users',
-            {
-                method: 'DELETE',
-            }
-        )
-
-        fetch(request)
+        axios.delete('/api/users')
         .then(response=>{
-            if(!response.ok){
-                throw new Error('Something went wrong!')
-            }
-
-            localStorage.removeItem('userId');
-
-            console.log(localStorage.getItem('userId'))
-
             this.setState({
-                isLoggedIn: localStorage.getItem('userId')
+                isLoggedIn: true
             })
-
             this.props.rerenderParent();
         })
         .catch(error=>{
@@ -43,8 +41,6 @@ class Navbar extends React.Component{
         })
     }
 
-
-    
 
     render(){
         return(

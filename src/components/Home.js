@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
-import BookTile from './BookTile'
+import BookList from './BookList'
 
 class Home extends React.Component {
     constructor(props){
@@ -26,7 +26,7 @@ class Home extends React.Component {
         return (
             <React.Fragment>
                 <Navbar rerenderParent={this.handleLogout} />
-                <BookTile key={this.state.isLoggedIn} />
+                <BookList key={this.state.isLoggedIn} />
             </React.Fragment>
         )
     }

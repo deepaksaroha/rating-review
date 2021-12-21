@@ -40,7 +40,21 @@ class Login extends React.Component{
     }
 
     validate=()=>{
+        if(this.state.emailId === '' || this.state.password === ''){
+            this.setState({
+                error: 'all fields are mandatory'
+            })
+            return false
+        }
 
+        const emRegex = /[a-zA-Z]\w*@\w*\.\D+/
+
+        if(!emRegex.test(this.state.emailId)){
+            this.setState({
+                error: 'Email Id needs to be of the form abc@xyz.com'
+            })
+            return false
+        }
 
         return true;
     }
@@ -57,7 +71,7 @@ class Login extends React.Component{
             })
             .catch(error=>{
                 this.setState({
-                    error: error.response.data.message
+                    error: error.response.data
                 })
             })
         }
@@ -94,6 +108,7 @@ class Login extends React.Component{
                                 <button id="login-btn" onClick={this.handleLogin}>Login</button>
                             </div>
                         </form>
+                    { this.state.error !== '' ? <p style={{color: "red", fontSize: "16px"}}>{this.state.error}</p>:''}
                     </div>
                 </div>
             </React.Fragment>

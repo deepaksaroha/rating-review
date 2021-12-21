@@ -3,42 +3,8 @@ import axios from 'axios'
 import '../css/Navbar.css'
 
 class Navbar extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            isLoggedIn: false
-        }
-    }
-
-    getLoginStatus=()=>{
-        axios.get('/api/users')
-        .then(response=>{
-            this.setState({
-                isLoggedIn: true
-            })
-        })
-        .catch(error=>{
-            this.setState({
-                isLoggedIn: false
-            })
-        })
-    }
-
-    componentDidMount(){
-        this.getLoginStatus();
-    }
-
     handleLogout = () =>{
-        axios.delete('/api/users')
-        .then(response=>{
-            this.setState({
-                isLoggedIn: true
-            })
-            this.props.rerenderParent();
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+        this.props.handleLogout();
     }
 
 
@@ -49,7 +15,7 @@ class Navbar extends React.Component{
                     <a href="/home"><p>Home</p></a>
                     <p id="site-name">PaperPhile</p>
                     {
-                        this.state.isLoggedIn ?
+                        this.props.loginStatus ?
                         <button id="navbar-logout-btn" onClick={this.handleLogout}>Logout</button> 
                         : 
                         <div><a className="login-btn" href="/login">Login</a>&nbsp;&nbsp;<a href="/signup">Signup</a></div> 

@@ -94,7 +94,9 @@ router.post('/', (req, res, next)=>{
 
 //logout user
 router.delete('/', (req, res, next)=>{
-    delete req.session.userId;
+    if(req.session.userId !== undefined){
+        delete req.session.userId;
+    }
     res.status(204).send();
 })
 

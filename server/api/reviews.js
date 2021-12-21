@@ -17,14 +17,18 @@ router.post('/', (req, res, next)=>{
 
     const userId = req.session.userId;
 
-    const { newrating, newreview, bookId } = req.body;
+    let { newRating, newReview, bookId } = req.body;
 
-    if(!newrating || !bookId || !userId){
+    if(newReview === undefined){
+        newReview = ''
+    }
+
+    if(!newRating || !bookId || !userId){
         res.status(400).send({error: 'Information incomplete'});
         return;
     }
 
-    Review.updateOne( {bookId: bookId, userId: userId}, { rating: newrating, review: newreview, date: Date.now() }, {upsert: true} )
+    Review.updateOne( {bookId: bookId, userId: userId}, { rating: newRating, review: newReview, date: Date.now() }, {upsert: true} )
     .then(()=>{
         res.status(201).send({message: "Review Added"});
     })

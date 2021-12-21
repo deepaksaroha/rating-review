@@ -1,12 +1,12 @@
 const express = require('express')
-const review = require('../db/models/reviews')
-const { v4: uuidv4 } = require('uuid');
+const Review = require('../db/models/reviews')
+// const { v4: uuidv4 } = require('uuid');
 
 
 const router = express.Router();
 
 
-//add a review
+//add or update a review
 router.post('/', (req, res, next)=>{
     if(!req.session.userId){
         res.status(401).send({error: 'User not authenticated'});
@@ -18,94 +18,31 @@ router.post('/', (req, res, next)=>{
         return;
     }
 
-    const { newrating, newreview, bookId, userId} = req.body;
+    const userId = req.session.userId;
+
+    const { newrating, newreview, bookId } = req.body;
 
     if(!newrating || !bookId || !userId){
         res.status(400).send({error: 'Information incomplete'});
         return;
     }
 
-    const reviewId = uuidv4();
-
-    let reviewData = new review({reviewid:reviewId, rating: newrating, bookid: bookId, userid: userId});
-    if(newreview){
-        reviewData = new review({reviewid:reviewId, rating: newrating, review: newreview, bookid: bookId, userid: userId});
-    }
-
-    reviewData.save()
+    Review.updateOne( {bookId: bookId, userId: userId}, { rating: newrating, review: newreview, date: Date.now() }, {upsert: true} )
     .then(()=>{
-        res.status(201).send({Id: reviewId});
+        res.status(201).send({message: "Review Added"});
     })
     .catch(error=>{
         res.status(501).send({error:'Internal server error!'});
     })
 
 })
-
-//get reviews/ratings by a user for a book
-router.get('/:bookId-:userId', (req, res, next)=>{
-    if(!req.session.userId){
-        res.status(401).send({error: 'User not authenticated'});
-        return;
-    }
-
-    review.findOne({bookId: req.params.bookId, userId: req.params.userId})
-    .then(reviewData=>{
-        if(!reviewData){
-            res.status(404).send({error: 'user did not review this book'});
-            return;
-        }
-
-        res.status(200).send({reviewData: reviewData});
-    })
-    .catch(error=>{
-        res.status(501).send({error:'Internal server error!'});
-    })
-
-})
-
-
 
 //get reviews for a book
 router.get('/:bookId', (req, res, next)=>{
 
-    review.find({bookId: req.params.bookId})
+    Review.find( {bookId: req.params.bookId} )
     .then(reviewList=>{
         res.status(200).send({reviewList: reviewList});
-    })
-    .catch(error=>{
-        res.status(501).send({error:'Internal server error!'});
-    })
-})
-
-
-//update the old review by user
-router.put('/:reviewId', (req, res, next)=>{
-    if(!req.session.userId){
-        res.status(401).send({error: 'User not authenticated'});
-        return;
-    }
-
-    if(!req.body){
-        res.status(401).send({error: 'Incomplete request'});
-        return;
-    }
-
-    const { newrating, newreview } = req.body;
-
-    if(!newrating){
-        res.status(401).send({error: 'Incomplete request'});
-        return;
-    }
-
-    let updateObject = {'rating': newrating};
-    if(newreview){
-        updateObject = {'rating': newrating, 'review': newreview}
-    }
-
-    review.findOneAndUpdate({bookId: req.params.bookId, userId: req.params.userId}, updateObject)
-    .then((review)=>{
-        res.status(200).send({id: review.id});
     })
     .catch(error=>{
         res.status(501).send({error:'Internal server error!'});

@@ -22,10 +22,6 @@ const reviewSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    },
-    upvoteCount:{
-        type: Number,
-        default: 0
     }
 });
 

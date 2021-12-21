@@ -13,7 +13,8 @@ class Book extends React.Component{
             newRating: 0,
             newReview: '',
             bookReviews: [],
-            isLoggedIn: false
+            isLoggedIn: false,
+            isEdit: false
         }
     }
 
@@ -52,11 +53,13 @@ class Book extends React.Component{
         })
         .then(response=>{
             this.getData();
+            this.setState({
+                isEdit: false
+            })
         })
         .catch(error=>{
             console.log('Something Went Wrong!');
         })
-
     }
 
     handleEditCancel = () =>{
@@ -67,7 +70,6 @@ class Book extends React.Component{
 
     handleEdit = () =>{
         this.setState({
-            review: this.state.userReview.review,
             isEdit: true
         })
     }
@@ -92,9 +94,11 @@ class Book extends React.Component{
     }
 
     changeRating = (newRating)=>{
-        this.setState({
-            newRating: newRating
-        })
+        if(this.state.isEdit){
+            this.setState({
+                newRating: newRating
+            })
+        }
     }
 
     render(){
@@ -102,7 +106,7 @@ class Book extends React.Component{
 
         return(
             <React.Fragment>
-                <Navbar rerenderParent={this.handleLogout} />
+                <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
                 <div className="book-outer-box">
                     <div className="thumbnail-box">
                         <img className="book-thumbnail" src={Book1} alt='bookImg' />
@@ -111,7 +115,7 @@ class Book extends React.Component{
                         <div className="book-detail-box">
                             <div>
                                 <div>
-                                    {book.avgRating}
+                                    {parseInt(book.avgRating)}
                                 </div>
                                 <div>
                                     {book.ratingCount} Ratings
@@ -145,7 +149,7 @@ class Book extends React.Component{
                                             !this.state.isEdit ?
                                                 <div>
                                                     <div className="rate-box">
-                                                        <Star loginStatus={this.state.isLoggedIn} rating={book.userReview.rating} changeRating={this.changeRating}/>
+                                                        <Star loginStatus={this.state.isLoggedIn} rating={book.userReview.rating} changeRating={()=>{}}/>
                                                     </div>
                                                     <div>
                                                         <div className="user-review-box">{book.userReview.review}</div>

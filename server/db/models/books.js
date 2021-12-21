@@ -31,19 +31,23 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
-    languges:{
+    languages:{
         type: [String]
     },
     avgRating:{
-        type: Number
+        type: Number,
+        default: 0,
+        required: true
     },
     reviewCount:{
         type: Number,
-        default: 0
+        default: 0,
+        required: true
     },
     ratingCount:{
         type: Number,
-        default: 0
+        default: 0,
+        required: true
     },
     availability:{
         type: {

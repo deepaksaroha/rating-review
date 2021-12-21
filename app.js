@@ -12,9 +12,6 @@ const api = require('./server/api/api')
 
 connectDB()
 .then(() => {
-    console.log('sada')
-    const Bookdata = new Book({ title: "Opening Places: An Anthology of Contemporary African Women's Writing", bookId: "5", author: "Yvonne Vera", edition: "1", descriptions: "In this anthology the award-winning author Yvonne Vera brings together the stories of many talented writers from different parts of Africa.", isbn: "9780435910106", languages: ["English", "African"], availability: { "amazon": true, "Flipkart": false, "kindle": false } });
-    Bookdata.save();
 
     //Handle /api with the api middleware
     app.use('/api', session({

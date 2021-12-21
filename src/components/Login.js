@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar';
 import '../css/Login.css'
+import axios from 'axios';
 
 class Login extends React.Component{
     constructor(props){
@@ -8,19 +9,24 @@ class Login extends React.Component{
         this.state = {
             isLoggedIn: false,
             emailId: '',
-            password: ''
+            password: '',
+            error: ''
         }
     }
 
     checkLoginStatus = async () => {
-        await this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+        axios.get('/api/users')
+        .then(response=>{
+            this.setState({
+                isLoggedIn: true
+            })
+            this.props.goBack();
         })
-
-        if(this.state.isLoggedIn){
-            this.props.history.goBack()
-        }
-
+        .catch(error=>{
+            this.setState({
+                isLoggedIn: false
+            })
+        })
     }
 
     componentDidMount(){
@@ -33,37 +39,40 @@ class Login extends React.Component{
         })
     }
 
+    validate=()=>{
+
+
+        return true;
+    }
+
     handleLogin = (e) => {
         e.preventDefault();
-        const request = new Request(
-            '/api/users',
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: '{ "emailId": "'+this.state.emailId+'", "password": "'+this.state.password+'" }'
-            }
-        )
-
-        fetch(request)
-        .then(response=>{
-            if(!response.ok){
-                Promise.reject(response);
-                return
-            }
-            return response.json();
-        })
-        .then(response=>{
-            localStorage.setItem('userId', response.userId);
-            this.setState({
-                isLoggedIn: true
+        if(this.validate()){
+            axios.put('/api/users', {
+                emailId: this.state.emailId,
+                password: this.state.password
             })
+            .then(response=>{
+                this.props.goBack();
+            })
+            .catch(error=>{
+                this.setState({
+                    error: error.response.data.message
+                })
+            })
+        }
+        
+    }
 
-            this.props.history.goBack();
+    handleLogout =()=>{
+        axios.delete('/api/users')
+        .then((response)=>{
+            this.setState({
+                isLoggedIn: false
+            })
         })
         .catch(error=>{
-            console.log(error.body)
+            console.log('some issue occured')
         })
     }
 
@@ -71,7 +80,7 @@ class Login extends React.Component{
     render(){
         return(
             <React.Fragment>
-                <Navbar rerenderParent={this.handleLogout}/>
+                <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
                 <div className="outer-box">
                     <div className="login-form-box">
                         <form>

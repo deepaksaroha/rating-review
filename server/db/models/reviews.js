@@ -2,10 +2,6 @@ const mongoose = require( 'mongoose')
 const { Schema } = require( 'mongoose')
 
 const reviewSchema = new Schema({
-    reviewid:{
-        type: String,
-        required: true
-    },
     bookid:{
         type: String,
         required: true

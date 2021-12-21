@@ -12,7 +12,7 @@ router.get('/', (req, res, next)=>{
         if(req.sessions.userId !== undefined){
             const userId = req.session.userId;
             bookList.forEach((book, index)=>{
-                Review.findOne( {bookId: book.bookId, userId: userId}, {_id:0, rating: 1, review: 1} )
+                Review.findOne( {bookId: book.bookId, userId: userId}, {rating: 1, review: 1} )
                 .then(review=>{
                     bookList[index].userReview = review;
                 })
@@ -42,7 +42,7 @@ router.get('/:bookId', (req, res, next)=>{
         const bookData = book;
         if(req.session.userId !== undefined){
             const userId = req.session.userId;
-            Review.findOne( {bookId: bookData.bookId, userId: userId}, {_id:0, rating: 1, review: 1} )
+            Review.findOne( {bookId: bookData.bookId, userId: userId}, {rating: 1, review: 1} )
             .then(review=>{
                 bookData.userReview = review;
             })

@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 import '../css/Book.css'
 import Book1 from '../images/kite.jpg'
 import axios from 'axios'
-import Star from './Stars'
+import Star from './Star'
 
 class Book extends React.Component{
     constructor(props){

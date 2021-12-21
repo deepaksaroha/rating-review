@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './Navbar';
 import '../css/Signup.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class Signup extends React.Component{
     constructor(props){
@@ -47,7 +48,7 @@ class Signup extends React.Component{
 
         if(un === '' || em === '' || pw === ''){
             this.setState({
-                validationError: 'All fields are mandatory!'
+                error: 'All fields are mandatory!'
             })
             return false
         }
@@ -56,7 +57,7 @@ class Signup extends React.Component{
 
         if(unRegex.test(un)){
             this.setState({
-                validationError: 'User Name can not start with Numbers and can not contain spaces'
+                error: 'User Name can not start with Numbers and can not contain spaces'
             })
             return false
         }
@@ -65,14 +66,14 @@ class Signup extends React.Component{
 
         if(!emRegex.test(em)){
             this.setState({
-                validationError: 'Email Id needs to be of the form abc@xyz.com'
+                error: 'Email Id needs to be of the form abc@xyz.com'
             })
             return false
         }
 
         if(pw.includes(' ')){
             this.setState({
-                validationError: 'Password can not contain spaces'
+                error: 'Password can not contain spaces'
             })
             return false
         }
@@ -138,8 +139,8 @@ class Signup extends React.Component{
                                 <button id="signup-btn" onClick={this.handleSignUp}>Signup</button>
                             </div>
                         </form>
-                        {this.state.error !== ''? <p className="error-message">{this.state.error}</p> : ''}
-                        {this.state.successMessage !== ''? <p className="success-message">{this.state.successMessage}</p> : ''}
+                        {this.state.error !== ''? <p className="error-message" style={{color: "red", fontSize: "16px"}}>{this.state.error}</p> : ''}
+                        {this.state.successMessage !== ''? <span><p className="success-message" style={{color: "green", fontSize: "16px"}}>{this.state.successMessage}</p><a href="/login">Login</a></span> : ''}
                     </div>
                 </div>
             </React.Fragment>

@@ -30,16 +30,22 @@ class Home extends React.Component {
     }
 
     handleLogout =()=>{
-        this.setState({
-            isLoggedIn: false
+        axios.delete('/api/users')
+        .then((response)=>{
+            this.setState({
+                isLoggedIn: false
+            })
+        })
+        .catch(error=>{
+            console.log('some issue occured')
         })
     }
 
     render(){
         return (
             <React.Fragment>
-                <Navbar rerenderParent={this.handleLogout} />
-                <BookList key={this.state.isLoggedIn} />
+                <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
+                <BookList loginStatus={this.state.isLoggedIn} />
             </React.Fragment>
         )
     }

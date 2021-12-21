@@ -1,12 +1,23 @@
 const express = require( 'express')
-const book = require( '../db/models/books.js')
+const Book = require( '../db/models/books.js')
+const Review = require('../db/models/reviews')
 
 const router = express.Router();
 
 //all books information
 router.get('/', (req, res, next)=>{
-    book.find()
+    Book.find()
     .then(books=>{
+        let bookList = books;
+        if(req.sessions.userId !== undefined){
+            const userId = req.session.userId;
+            bookList.forEach((book, index)=>{
+                Review.findOne( {bookId: book.bookId, userId: userId}, {_id:0, reviewId: 1, rating: 1, review: 1} )
+                .then(review=>{
+                    bookList[index].userReview = review;
+                })
+            })
+        }
         res.status(200).send({bookList: books});
     })
     .catch(error=>{
@@ -21,16 +32,22 @@ router.get('/:bookId', (req, res, next)=>{
         return;
     }
 
-    book.findOne({bookId: req.params.bookId})
-    .then(bookData=>{
-        if(!bookData){
+    const bookId = req.params.bookId;
+    Book.findOne( {bookId: bookId} )
+    .then(book=>{
+        if(!book){
             res.status(400).send({error: 'Invalid bookId'});
             return;
         }
-
-
-
-        res.status(200).send({bookData});
+        const bookData = book;
+        if(req.session.userId !== undefined){
+            const userId = req.session.userId;
+            Review.findOne( {bookId: bookData.bookId, userId: userId}, {_id:0, reviewId: 1, rating: 1, review: 1} )
+            .then(review=>{
+                bookData.userReview = review;
+            })
+        }
+        res.status(200).send({bookData: bookData});
     })
     .catch(error=>{
         res.status(501).send({error: 'Internal Server Error!'});

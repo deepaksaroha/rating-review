@@ -1,10 +1,7 @@
 const express = require('express')
 const Review = require('../db/models/reviews')
-// const { v4: uuidv4 } = require('uuid');
-
 
 const router = express.Router();
-
 
 //add or update a review
 router.post('/', (req, res, next)=>{

@@ -2,147 +2,42 @@ import React from 'react'
 import Navbar from './Navbar';
 import '../css/Book.css'
 import Book1 from '../images/kite.jpg'
+import axios from 'axios'
+import Star from './Stars'
 
 class Book extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isLoggedIn: true,
-            isReviewed: false,
-            bookData: {
-                // title: 'The Kite Runner',
-                // bookId: '1',
-                // author: 'HM',
-                // edition: 1,
-                // description: 'If you have 6 months to prepare for the interview I would definitely suggest the following things assuming that you have a formal CS degree and/or you have software development experience in some company',
-                // published: 1984,
-                // isbn: '12',
-                // languages: ['English', 'Urdu'],
-                // avgRating: 4,
-                // reviewCount: 100,
-                // ratingCount: 1000,
-                // availability: {
-                //     amazon: false,
-                //     flipkart: true,
-                //     kindle: true
-                // }
-            },
-            userReview: {
-                reviewid: '1',
-                bookid: '1',
-                userid: '1',
-                rating: 3,
-                review:'a Good book',
-                date: new Date(),
-                upvoteCount: 5,
-            },
-            reviews: [],
-            review: '',
-            isEdit: false,
-            newRating: 0
+            bookData: {},
+            newRating: 0,
+            newReview: '',
+            bookReviews: [],
+            isLoggedIn: false
         }
     }
 
-    async getData(){
+    getData=()=>{
+        const promise1 = axios.get(`/api/books/${this.props.params.match.bookId}`);
+        const promise2 = axios.get('/api/users');
+        const promise3 = axios.get(`/api/reviews/${this.props.params.match.bookId}`);
 
-
-        fetch(`/api/books/1`)
-        // fetch(`/api/books/${this.props.params.match.bookId}`)
-        .then(response=>{
-            
-            if(!response.ok){
-                throw new Error('Something Went Wrong!');
-            }
-            
-            return response.json();
+        Promise.all(promise1, promise3)
+        .then(([res1, res3])=>{
+            this.setState({
+                bookData: res1.bookData,
+                bookReviews: res3.reviewData
+            })
+            return promise2;
         })
         .then(response=>{
             this.setState({
-                bookData: response.bookData
+                isLoggedIn: true
             })
         })
         .catch(error=>{
-            console.log(error.message);
+            console.log('Error Occured')
         })
-
-        fetch(`/api/reviews/1`)
-        // fetch(`/api/reviews/${this.props.params.match.bookId}`)
-        .then(response=>{
-            if(!response.ok){
-                throw new Error('Something Went Wrong!');
-            }
-
-            return response.json();
-        })
-        .then(response=>{
-
-            const reviewList = response.reviewList;
-
-            reviewList.forEach(async review =>{
-                let userNames = []
-                
-                await fetch('/api/users/'+review.userid)
-                .then(response=>{
-                    if(!response.ok){
-                        throw new Error('some issue occured')
-                    }
-                    return response.json();
-                })
-                .then(response=>{
-                    userNames.push(response.userName)
-                })
-                .catch(error=>{
-                    console.log(error)
-                })
-
-
-                for(let i in reviewList){
-                    reviewList[i].userName = userNames[i];
-                }
-
-                this.setState({
-                    reviews: reviewList
-                })
-            })
-
-
-            
-
-
-        })
-        .catch(error=>{
-            console.log('something went wrong');
-        })
-
-       
-
-        
-        await this.setState({
-            isLoggedIn: localStorage.getItem('userId') !== null
-        })
-
-        if(this.state.isLoggedIn){
-            // fetch(`/api/reviews/${this.this.props.params.match.bookId}-${localStorage.getItem('userId')}`)
-            fetch(`/api/reviews/1-${localStorage.getItem('userId')}`)
-            .then(response=>{
-
-                if(!response.ok){
-                    throw new Error(response.error)
-                }
-
-                return response.json();
-
-            })
-            .then(response=>{
-                this.setState({
-                    isReviewed: true,
-                    userReview: response.reviewData
-                })
-            })
-            .catch(error=>{
-                console.log(error);
-            })
-        }
     }
 
     componentDidMount(){
@@ -150,54 +45,18 @@ class Book extends React.Component{
     }
 
     handleSubmitReview = () =>{
-        const request = new Request(
-            `/api/reviews`,
-            {
-                method: 'POST',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                body: '{ "newrating":"' +this.state.newRating+'" , "newreview":"' +this.state.review+'" , "bookId":"' +this.state.bookData.bookId+'" , "userId":"' +localStorage.getItem('userId')+'" }'
-            }
-        );
-
-        fetch(request)
-        .then(response=>response.json())
+        axios.post('/api/reviews', {
+            newRating: this.state.newRating,
+            newReview: this.state.newReview,
+            bookId: this.props.params.match.bookId
+        })
         .then(response=>{
             this.getData();
-            this.setState({
-                review: ''
-            })
         })
         .catch(error=>{
             console.log('Something Went Wrong!');
         })
-    }
 
-    handleEditDone = () =>{
-        const request = new Request(
-            `/api/reviews/${this.state.userReview.reviewid}`,
-            {
-                method: 'PUT',
-                headers: new Headers({
-                    'Content-Type': 'application/json'
-                }),
-                body: '{ "newrating":"'+this.state.newRating+'", "newreview":"'+this.state.review+'" }'
-            }
-        );
-
-        fetch(request)
-        .then(response=>response.json())
-        .then(response=>{
-            this.getData();
-            this.setState({
-                isEdit: false,
-                review: ''
-            })
-        })
-        .catch(error=>{
-            console.log('Something Went Wrong!');
-        })
     }
 
     handleEditCancel = () =>{
@@ -221,54 +80,25 @@ class Book extends React.Component{
     }
 
     handleLogout =()=>{
-        this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+        axios.delete('/api/users')
+        .then((response)=>{
+            this.setState({
+                isLoggedIn: false
+            })
+        })
+        .catch(error=>{
+            console.log('some issue occured')
         })
     }
 
-    
-
-
-    handleStaring = (e) =>{
-
+    changeRating = (newRating)=>{
         this.setState({
-            newRating: e.target.value
+            newRating: newRating
         })
-
     }
 
     render(){
         const book = this.state.bookData;
-        const review = this.state.userReview;
-
-        const filledStarElement = (id) => {
-            return <span key={id}>
-                <input className="stars-input" type="text" onClick={(!this.isReviewed || this.isEdit) ? this.handleStaring:()=>{} } id={String(id)} value={String(id)} readOnly/>
-                <label className="filled-stars" htmlFor={String(id)}>&#9733;</label>
-            </span>
-        }
-
-        const emptyStarElement = (id) => {
-            return <span key={id}>
-                <input className="stars-input" type="text" onClick={(!this.isReviewed || this.isEdit) ? this.handleStaring:()=>{} } id={String(id)} value={String(id)} readOnly/>
-                <label className="empty-stars" htmlFor={String(id)}>&#9733;</label>
-            </span>
-        }
-
-        const starElement = (rating = 0) => {
-            return(
-                <div>
-                    {[1,2,3,4,5].map(id=>{
-                        if(id<=rating){
-                            return filledStarElement(id);
-                        }else{
-                            return emptyStarElement(id);
-                        }
-                    })}
-                </div>
-            )
-        }
-
 
         return(
             <React.Fragment>
@@ -307,38 +137,38 @@ class Book extends React.Component{
                                 </div>
                             </div>
                         </div>
-                        <div className="book-reviews-box">
+                        <div className="user-review">
                             <div>
                                 {
                                     this.state.isLoggedIn ?
-                                        this.state.isReviewed ?
+                                        book.userReview !== undefined ?
                                             !this.state.isEdit ?
                                                 <div>
                                                     <div className="rate-box">
-                                                        {starElement(review.rating)}
+                                                        <Star loginStatus={this.state.isLoggedIn} rating={book.userReview.rating} changeRating={this.changeRating}/>
                                                     </div>
                                                     <div>
-                                                        <div className="user-review-box">{review.review}</div>
+                                                        <div className="user-review-box">{book.userReview.review}</div>
                                                     </div>
                                                     <button className="book-modify-btn" onClick={this.handleEdit}>Edit</button>
                                                 </div>
                                                 :
                                                 <div>
                                                     <div className="rate-box">
-                                                        {starElement(this.state.newRating)}
+                                                        <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
                                                     </div>
                                                     <div>
-                                                        <textarea className="user-review-box" name="review" value={this.state.review} onChange={this.handleChange} placeholder="Write your review here"></textarea>
+                                                        <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
                                                     </div>
-                                                    <button className="book-modify-btn" onClick={this.handleEditDone}>Done</button><button className="book-modify-btn" onClick={this.handleEditCancel}>Cancel</button>
+                                                    <button className="book-modify-btn" onClick={this.handleSubmitReview}>Done</button><button className="book-modify-btn" onClick={this.handleEditCancel}>Cancel</button>
                                                 </div>
                                             :
                                             <div>
                                                 <div className="rate-box">
-                                                    {starElement(this.state.newRating)}
+                                                    <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
                                                 </div>
                                                 <div>
-                                                    <textarea className="user-review-box" name="review" value={this.state.review} onChange={this.handleChange} placeholder="Write your review here"></textarea>
+                                                    <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
                                                 </div>
                                                 <button className="book-modify-btn" onClick={this.handleSubmitReview}>Submit</button>
                                             </div>
@@ -347,9 +177,6 @@ class Book extends React.Component{
                                             <a className="login-btn" href="/login" >Login to Review</a>
                                         </div>
                                 }
-                            </div>
-                            <div>
-                                most helpful reviews
                             </div>
                         </div>
                     </div>
@@ -361,16 +188,16 @@ class Book extends React.Component{
                     <div className="all-reviews"> 
                         {
                            
-                            this.state.reviews.map(review=>{
-                                if(review.userId !== localStorage.getItem('userId'))
+                            this.state.bookReviews.map(review=>{
+                                if(book.userReview === undefined || review._id !== book.userReview._id)
                                 {
-                                    return <div key={review.reviewId} className="book-review">
+                                    return <div key={review._id} className="book-review">
                                         <p>{review.userName}</p>
                                         <p>{review.rating}</p>
                                         <p>{review.review}</p>
                                     </div>
                                 }else{
-                                    return <div key={review.reviewId}>''</div>
+                                    return <div key={review._id}>''</div>
                                 }
                             })
                         }

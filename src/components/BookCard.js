@@ -45,7 +45,7 @@ class BookCard extends React.Component{
                                     <p className="book-author">by-{book.author}</p>
                                 </div>
                                 <div className="rating-info">
-                                    <p><Star rating={parseInt(book.avgRating)}/></p>
+                                    <Star rating={parseInt(book.avgRating)}/>
                                     <p>{book.ratingCount} Ratings</p>&nbsp;
                                     <p>{book.reviewCount} Reviews</p>
                                 </div>

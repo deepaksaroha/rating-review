@@ -2,7 +2,6 @@ import React from 'react'
 import Navbar from './Navbar';
 import '../css/Signup.css'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 class Signup extends React.Component{
     constructor(props){

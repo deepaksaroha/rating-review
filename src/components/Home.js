@@ -41,11 +41,15 @@ class Home extends React.Component {
         })
     }
 
+    handleBookSelect=(id)=>{
+        this.props.history.push(`/book/${id}`);
+    }
+
     render(){
         return (
             <React.Fragment>
                 <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
-                <BookList loginStatus={this.state.isLoggedIn} />
+                <BookList loginStatus={this.state.isLoggedIn} handleBookSelect={this.handleBookSelect}/>
             </React.Fragment>
         )
     }

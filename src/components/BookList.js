@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React from 'react'
-import { withRouter } from "react-router-dom";
 import BookCard from './BookCard';
 
 import '../css/BookTile.css'
-import kite from '../images/kite.jpg'
 
-class BookTile extends React.Component {
+class BookList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -22,7 +20,7 @@ class BookTile extends React.Component {
         axios.get('/api/books')
         .then(response=>{
             this.setState({
-                books: response.bookList,
+                books: response.data.bookList,
                 isLoggedIn: this.props.loginStatus
             })
         })
@@ -40,18 +38,19 @@ class BookTile extends React.Component {
         this.fetchData();
     }
 
-    handleBookSelect = (event)=>{
-        this.props.history.replace(`/book/${event.target.value}`);
+    handleBookSelect = (id)=>{
+        this.props.handleBookSelect(id)
     }
 
     render(){
+        // console.log(this.state.books);
         return (
             <React.Fragment>
                 <main>
                 {
                     this.state.books.map((book, index)=>{
                         return(
-                                <div key={book.bookId} onClick={this.handleBookSelect} id={book.bookId}>
+                                <div key={book.bookId} onClick={()=>this.handleBookSelect(book.bookId)} id={book.bookId}>
                                     <BookCard book={book} handleChange={this.handleChange}/>
                                 </div>
                         )
@@ -63,4 +62,4 @@ class BookTile extends React.Component {
     }
 }
 
-export default withRouter(BookTile);
+export default BookList;

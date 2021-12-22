@@ -14,6 +14,7 @@ connectDB()
 .then(() => {
 
     //Handle /api with the api middleware
+    app.use(express.json());
     app.use('/api', session({
         genid() {
             return genuuid() // use UUIDs for session IDs

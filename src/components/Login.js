@@ -20,7 +20,7 @@ class Login extends React.Component{
             this.setState({
                 isLoggedIn: true
             })
-            this.props.goBack();
+            this.props.history.goBack();
         })
         .catch(error=>{
             this.setState({
@@ -67,7 +67,7 @@ class Login extends React.Component{
                 password: this.state.password
             })
             .then(response=>{
-                this.props.goBack();
+                this.props.history.goBack();
             })
             .catch(error=>{
                 this.setState({

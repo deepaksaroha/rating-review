@@ -19,9 +19,9 @@ class Book extends React.Component{
     }
 
     getData=()=>{
-        const promise1 = axios.get(`/api/books/${this.props.params.match.bookId}`);
+        const promise1 = axios.get(`/api/books/${this.props.match.params.bookId}`);
         const promise2 = axios.get('/api/users');
-        const promise3 = axios.get(`/api/reviews/${this.props.params.match.bookId}`);
+        const promise3 = axios.get(`/api/reviews/${this.props.match.params.bookId}`);
 
         Promise.all(promise1, promise3)
         .then(([res1, res3])=>{

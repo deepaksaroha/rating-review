@@ -1,11 +1,6 @@
 import React from 'react'
 
 class Star extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-        }
-    }
 
     changeRating=(e)=>{
         this.props.changeRating(parseInt(e.target.id));        
@@ -24,11 +19,13 @@ class Star extends React.Component{
         return(
             <React.Fragment>
                 {
-                    [1,2,3,4,5].forEach(i=>{
-                        if(i<=this.props.rating){
-                            this.filledStarElement(i)
+                    [1,2,3,4,5].map(i=>{
+                        if(i<=parseInt(this.props.rating)){
+                            return this.filledStarElement(i)
+                            // return <div style={{display: "inline-block", color: "orange"}} id={i} onClick={this.changeRating}>&#9733;</div>
                         }else{
-                            this.emptyStarElement(i)
+                            return this.emptyStarElement(i)
+                            // return <div style={{display: "inline-block", color: "grey"}} id={i} onClick={this.changeRating}>&#9733;</div>
                         }
                     })
                 }

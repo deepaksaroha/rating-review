@@ -9,7 +9,7 @@ router.get('/', (req, res, next)=>{
     Book.find()
     .then(books=>{
         let bookList = books;
-        if(req.sessions.userId !== undefined){
+        if(req.session.userId !== undefined){
             const userId = req.session.userId;
             bookList.forEach((book, index)=>{
                 Review.findOne( {bookId: book.bookId, userId: userId}, {rating: 1, review: 1} )
@@ -18,7 +18,7 @@ router.get('/', (req, res, next)=>{
                 })
             })
         }
-        res.status(200).send({bookList: books});
+        res.status(200).send({bookList: bookList});
     })
     .catch(error=>{
         res.status(501).send({error: 'Internal Server Error'});

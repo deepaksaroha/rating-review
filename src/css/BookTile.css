@@ -21,7 +21,6 @@ main{
 
 .books:hover{
 	box-shadow: 0 0 5px 1px rgb(214, 214, 214);
-	background-color: rgba(238, 238, 238, 0.555);
 }
 
 

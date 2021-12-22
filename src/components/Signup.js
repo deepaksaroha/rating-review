@@ -21,7 +21,7 @@ class Signup extends React.Component{
             this.setState({
                 isLoggedIn: true
             })
-            this.props.goBack();
+            this.props.history.replace('/home');
         })
         .catch(error=>{
             this.setState({
@@ -90,7 +90,7 @@ class Signup extends React.Component{
             axios.post('/api/users', {
                 userName: this.state.userName,
                 emailId: this.state.emailId,
-                password: this.state.password
+                password: this.state.password                         
             })
             .then(response=>{
                 this.setState({

@@ -38,20 +38,18 @@ class BookList extends React.Component {
         this.fetchData();
     }
 
-    handleBookSelect = (id)=>{
-        this.props.handleBookSelect(id)
-    }
+    
+
 
     render(){
-        // console.log(this.state.books);
         return (
             <React.Fragment>
                 <main>
                 {
                     this.state.books.map((book, index)=>{
                         return(
-                                <div key={book.bookId} onClick={()=>this.handleBookSelect(book.bookId)} id={book.bookId}>
-                                    <BookCard book={book} handleChange={this.handleChange}/>
+                                <div key={book.bookId} id={book.bookId}>
+                                    <BookCard book={book} handleChange={this.handleChange} handleBookSelect={this.props.handleBookSelect} loginStatus={this.state.isLoggedIn}/>
                                 </div>
                         )
                     })

@@ -6,17 +6,16 @@ class BookCard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            focus: false,
             newRating: 0,
             isEdit: false
         }
     }
 
     changeRating = (newRating)=>{
-        if(this.state.isEdit){
-            this.setState({
-                newRating: newRating
-            })
-        }
+        this.setState({
+            newRating: newRating
+        })
     }
 
     submitRating = () =>{
@@ -25,18 +24,24 @@ class BookCard extends React.Component{
             bookId: this.props.book.bookId
         })
         .then(response=>{
-            this.handleChange();
+            this.props.handleChange();
         })
         .catch(error=>{
             console.log('Something Went Wrong!');
         })
     }
 
+    handleBookClick =(id)=>{
+        if(this.state.focus !== true){
+            this.props.handleBookSelect(id);
+        }        
+    }
+
     render(){
         const book = this.props.book;
         return (
             <React.Fragment>
-                <button className='books' style={{pointerEvents: this.state.focus? 'none':'auto' }} key={book.bookId} value={book.bookId} onClick={this.state.focus? ()=>{} : this.handleClick}>
+                <div className='books' style={{backgroundColor: 'whitesmoke', border: '1px solid black'}} key={book.bookId} value={book.bookId} onClick={()=>this.handleBookClick(book.bookId)}>
                     <div className='book-container'>
                         <div className="desc-box">
                             <div className="book-heading-box">
@@ -45,7 +50,7 @@ class BookCard extends React.Component{
                                     <p className="book-author">by-{book.author}</p>
                                 </div>
                                 <div className="rating-info">
-                                    <Star rating={parseInt(book.avgRating)}/>
+                                    <Star rating={parseInt(book.avgRating)} changeRating={()=>{}}/>
                                     <p>{book.ratingCount} Ratings</p>&nbsp;
                                     <p>{book.reviewCount} Reviews</p>
                                 </div>
@@ -57,9 +62,9 @@ class BookCard extends React.Component{
                         
                         <div className="thumbnail-box">
                             <img className="book-thumbnail" src={book.imgLocation} alt='bookImg' />
-                            <div className="user-rating">
-                                {    
-                                    this.state.isLoggedIn ?
+                            <div className="user-rating" onMouseEnter={()=>{console.log('a'); this.setState({focus:true})}} onMouseLeave={()=>{this.setState({focus:false})}}>
+                                {
+                                    this.props.loginStatus ?
                                         book.userReview !== undefined?
                                             !this.state.isEdit ?
                                                 <div>
@@ -69,17 +74,17 @@ class BookCard extends React.Component{
                                                 :
                                                 <div>
                                                     <Star rating={this.state.newRating} changeRating={this.changeRating} />
-                                                    <buttton onClick={this.submitRating}>Done</buttton>
+                                                    <button onClick={this.submitRating}>Done</button>
+                                                    <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                                 </div>
                                             :
                                             <div>
                                                 <Star rating={this.state.newRating} changeRating={this.changeRating} />
-                                                <buttton onClick={this.submitRating}>Done</buttton>
+                                                <button onClick={this.submitRating}>Done</button>
+                                                <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                             </div>
                                         :
-                                        <div>
-                                            <Star rating={0} changeRating={()=>{}} />
-                                        </div>
+                                        ''
                                 }
                             </div>
                         </div>
@@ -90,7 +95,7 @@ class BookCard extends React.Component{
                             <p>ISBN: {book.isbn}</p>
                         </div>
                     </div>
-                </button>
+                </div>
             </React.Fragment>
         )
     }

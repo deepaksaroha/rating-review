@@ -7,19 +7,25 @@ class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            isLoaded: false,
             isLoggedIn : false
         }
     }
 
     getLoginStatus=()=>{
+        this.setState({
+            isLoaded: false
+        })
         axios.get('/api/users')
         .then(response=>{
             this.setState({
+                isLoaded: true,
                 isLoggedIn: true
             })
         })
         .catch(error=>{
             this.setState({
+                isLoaded: true,
                 isLoggedIn: false
             })
         })
@@ -32,9 +38,7 @@ class Home extends React.Component {
     handleLogout =()=>{
         axios.delete('/api/users')
         .then((response)=>{
-            this.setState({
-                isLoggedIn: false
-            })
+            this.getLoginStatus();
         })
         .catch(error=>{
             console.log('some issue occured')
@@ -48,8 +52,16 @@ class Home extends React.Component {
     render(){
         return (
             <React.Fragment>
-                <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
-                <BookList loginStatus={this.state.isLoggedIn} handleBookSelect={this.handleBookSelect}/>
+                {
+                    this.state.isLoaded ?
+                    <div>
+                        <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
+                        <BookList loginStatus={this.state.isLoggedIn} handleBookSelect={this.handleBookSelect}/>
+                    </div>
+                    :
+                    ''
+                }
+                
             </React.Fragment>
         )
     }

@@ -64,7 +64,7 @@ class Login extends React.Component{
                 password: this.state.password
             })
             .then(response=>{
-                this.props.history.goBack();
+                this.props.history.replace('/home');
             })
             .catch(error=>{
                 this.setState({

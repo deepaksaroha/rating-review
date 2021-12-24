@@ -24,6 +24,7 @@ class BookCard extends React.Component{
             bookId: this.props.book.bookId
         })
         .then(response=>{
+            this.setState({isEdit: false})
             this.props.handleChange();
         })
         .catch(error=>{

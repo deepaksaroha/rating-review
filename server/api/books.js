@@ -7,16 +7,23 @@ const router = express.Router();
 //all books information
 router.get('/', (req, res, next)=>{
     Book.find()
-    .then(books=>{
-        let bookList = books;
+    .then(async books=>{
+        let bookList = [];
+        books.forEach(book=>{
+            bookList.push(Object.assign({}, book.toJSON()));
+        })
+        // let reviewArr = [];
         if(req.session.userId !== undefined){
             const userId = req.session.userId;
-            bookList.forEach((book, index)=>{
-                Review.findOne( {bookId: book.bookId, userId: userId}, {rating: 1, review: 1} )
+            for(const i in bookList){
+                await Review.findOne( {bookId: bookList[i].bookId, userId: userId}, {rating: 1, review: 1} )
                 .then(review=>{
-                    bookList[index].userReview = review;
+                    bookList[i].userReview = review;
                 })
-            })
+                .catch(()=>{})
+            }
+
+
         }
         res.status(200).send({bookList: bookList});
     })

@@ -62,7 +62,7 @@ class BookCard extends React.Component{
                         
                         <div className="thumbnail-box">
                             <img className="book-thumbnail" src={book.imgLocation} alt='bookImg' />
-                            <div className="user-rating" onMouseEnter={()=>{console.log('a'); this.setState({focus:true})}} onMouseLeave={()=>{this.setState({focus:false})}}>
+                            <div className="user-rating" onMouseEnter={()=>{this.setState({focus:true})}} onMouseLeave={()=>{this.setState({focus:false})}}>
                                 {
                                     this.props.loginStatus ?
                                         book.userReview !== undefined?

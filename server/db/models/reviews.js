@@ -2,11 +2,11 @@ const mongoose = require( 'mongoose')
 const { Schema } = require( 'mongoose')
 
 const reviewSchema = new Schema({
-    bookid:{
+    bookId:{
         type: String,
         required: true
     },
-    userid:{
+    userId:{
         type: String,
         required: true
     },

@@ -29,8 +29,12 @@ class Book extends React.Component{
                 bookData: responses[0].data.bookData,
                 bookReviews: responses[1].data.reviewList
             })
-            return promise2;
         })
+        .catch(error=>{
+            console.log('Error Occured')
+        })
+
+        promise2
         .then(response=>{
             this.setState({
                 isLoggedIn: true
@@ -100,6 +104,7 @@ class Book extends React.Component{
     }
 
     render(){
+        console.log(this.state.bookReviews);
         const book = this.state.bookData;
         return(
             <React.Fragment>
@@ -198,19 +203,18 @@ class Book extends React.Component{
                     
                     {
                         this.state.bookReviews.length !== 0 ?
-                            <div className="all-reviews"> 
+                            <div className="all-reviews">
                                 {
-                                
                                     this.state.bookReviews.map(review=>{
                                         if(book.userReview === undefined || review._id !== book.userReview._id)
                                         {
                                             return <div key={review._id} className="book-review">
                                                 <p>{review.userName}</p>
-                                                <p>{review.rating}</p>
-                                                <p>{review.review}</p>
+                                                <Star rating={review.rating} changeRating={()=>{}} />
+                                                {review.review !== '' ?<p>{review.review}</p>:''}
                                             </div>
                                         }else{
-                                            return <div key={review._id}>''</div>
+                                            return ''
                                         }
                                     })
                                 }

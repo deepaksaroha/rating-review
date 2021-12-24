@@ -21,12 +21,10 @@ main{
 
 .books:hover{
 	box-shadow: 0 0 5px 1px rgb(214, 214, 214);
-	background-color: rgba(238, 238, 238, 0.555);
 }
 
 
 .book-container{
-	pointer-events: none;
 	display: grid;
 	grid-template-columns: 3fr 1fr 1fr;
 	width: 100%;
@@ -95,6 +93,7 @@ main{
 }
 
 .user-rating{
+	cursor: default;
 	position: absolute;
 	padding: 0 5px;
 	left: 0;
@@ -116,7 +115,6 @@ main{
 }
 
 .empty-stars{
-	pointer-events: auto;
 	color: white;
 	font-size: 250%;
 }

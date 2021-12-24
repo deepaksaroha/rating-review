@@ -2,15 +2,11 @@ const mongoose = require( 'mongoose')
 const { Schema } = require( 'mongoose')
 
 const reviewSchema = new Schema({
-    reviewid:{
+    bookId:{
         type: String,
         required: true
     },
-    bookid:{
-        type: String,
-        required: true
-    },
-    userid:{
+    userId:{
         type: String,
         required: true
     },
@@ -26,13 +22,9 @@ const reviewSchema = new Schema({
     date: {
         type: Date,
         default: Date.now
-    },
-    upvoteCount:{
-        type: Number,
-        default: 0
     }
 });
 
-const review = mongoose.model('review', reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
-module.exports = review;
+module.exports = Review;

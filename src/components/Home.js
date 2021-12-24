@@ -1,32 +1,67 @@
 import React from 'react'
+import axios from 'axios'
 import Navbar from './Navbar'
-import BookTile from './BookTile'
+import BookList from './BookList'
 
 class Home extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            isLoaded: false,
             isLoggedIn : false
         }
     }
 
-    componentDidMount(){
+    getLoginStatus=()=>{
         this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+            isLoaded: false
+        })
+        axios.get('/api/users')
+        .then(response=>{
+            this.setState({
+                isLoaded: true,
+                isLoggedIn: true
+            })
+        })
+        .catch(error=>{
+            this.setState({
+                isLoaded: true,
+                isLoggedIn: false
+            })
         })
     }
 
+    componentDidMount(){
+        this.getLoginStatus();
+    }
+
     handleLogout =()=>{
-        this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+        axios.delete('/api/users')
+        .then((response)=>{
+            this.getLoginStatus();
         })
+        .catch(error=>{
+            console.log('some issue occured')
+        })
+    }
+
+    handleBookSelect=(id)=>{
+        this.props.history.push(`/book/${id}`);
     }
 
     render(){
         return (
             <React.Fragment>
-                <Navbar rerenderParent={this.handleLogout} />
-                <BookTile key={this.state.isLoggedIn} />
+                {
+                    this.state.isLoaded ?
+                    <div>
+                        <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
+                        <BookList loginStatus={this.state.isLoggedIn} handleBookSelect={this.handleBookSelect}/>
+                    </div>
+                    :
+                    ''
+                }
+                
             </React.Fragment>
         )
     }

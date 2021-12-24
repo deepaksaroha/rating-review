@@ -1,9 +1,15 @@
 const express = require( 'express')
 const user = require( '../db/models/users')
+const { auth } = require('../middleware/auth');
 const bcrypt = require( 'bcryptjs')
 
 const router = express.Router();
 
+
+//login status
+router.get('/', auth, (req, res, next)=>{
+    res.status(200).send({message: 'User is loggedin'});
+})
 
 //login user
 router.put('/', (req, res, next)=>{
@@ -88,7 +94,9 @@ router.post('/', (req, res, next)=>{
 
 //logout user
 router.delete('/', (req, res, next)=>{
-    delete req.session.userId;
+    if(req.session.userId !== undefined){
+        delete req.session.userId;
+    }
     res.status(204).send();
 })
 

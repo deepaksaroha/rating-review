@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar';
 import '../css/Signup.css'
+import axios from 'axios';
 
 class Signup extends React.Component{
     constructor(props){
@@ -11,19 +12,20 @@ class Signup extends React.Component{
             password: '',
             error: '',
             successMessage: '',
-            validationError: ''
+            isLoggedIn: false
         }
     }
 
     checkLoginStatus = async () => {
-        await this.setState({
-            isLoggedIn: localStorage.getItem('userId') != null
+        axios.get('/api/users')
+        .then(response=>{
+            this.props.history.replace('/home');
         })
-
-        if(this.state.isLoggedIn){
-            this.props.history.goBack();
-        }
-
+        .catch(error=>{
+            this.setState({
+                isLoggedIn: false
+            })
+        })
     }
 
     componentDidMount(){
@@ -43,7 +45,7 @@ class Signup extends React.Component{
 
         if(un === '' || em === '' || pw === ''){
             this.setState({
-                validationError: 'All fields are mandatory!'
+                error: 'All fields are mandatory!'
             })
             return false
         }
@@ -52,7 +54,7 @@ class Signup extends React.Component{
 
         if(unRegex.test(un)){
             this.setState({
-                validationError: 'User Name can not start with Numbers and can not contain spaces'
+                error: 'User Name can not start with Numbers and can not contain spaces'
             })
             return false
         }
@@ -61,14 +63,14 @@ class Signup extends React.Component{
 
         if(!emRegex.test(em)){
             this.setState({
-                validationError: 'Email Id needs to be of the form abc@xyz.com'
+                error: 'Email Id needs to be of the form abc@xyz.com'
             })
             return false
         }
 
         if(pw.includes(' ')){
             this.setState({
-                validationError: 'Password can not contain spaces'
+                error: 'Password can not contain spaces'
             })
             return false
         }
@@ -81,56 +83,44 @@ class Signup extends React.Component{
 
     handleSignUp = (e) => {
         e.preventDefault();
-        this.setState({
-            error: ''
-        })
 
-        if(!this.validate()){
-            return;
-        }
-        
-        const request = new Request(
-            '/api/users',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: '{ "userName":"'+this.state.userName+'", "emailId":"'+this.state.emailId+'", "password":"'+this.state.password+'"}'
-            }
-        )
-
-        fetch(request)
-        .then(response=>{
-            if(!response.ok){
-                if(response.exists){
-                    throw new Error('Email Id already registered!');
-                }
-                throw new Error(response.error);
-            }
-
-            return response.json();
-        })
-        .then(response=>{
-            this.setState({
-                successMessage: 'Signup Successful'
+        if(this.validate()){
+            axios.post('/api/users', {
+                userName: this.state.userName,
+                emailId: this.state.emailId,
+                password: this.state.password                         
             })
+            .then(response=>{
+                this.setState({
+                    successMessage: 'SignUp Successful',
+                    error: ''
+                })
+            })
+            .catch(error=>{
+                this.setState({
+                    error: error.response.data.message
+                })
+            })
+        }
+    }
 
-            this.props.history.replace('/login')
+    
+    handleLogout =()=>{
+        axios.delete('/api/users')
+        .then((response)=>{
+            this.setState({
+                isLoggedIn: false
+            })
         })
         .catch(error=>{
-            this.setState({
-                error: error.message
-            })
+            console.log('some issue occured')
         })
-
-
     }
 
     render(){
         return(
             <React.Fragment>
-                <Navbar />
+                <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
                 <div className="outer-box">
                     <h2>“Show me a family of readers, and I will show you the people who move the world.” – Napoleon Bonaparte</h2>
                     <div className="signup-form-box">
@@ -144,9 +134,10 @@ class Signup extends React.Component{
                                 <label>Password: </label><br/>
                                 <input className="signup-input" type="password" name="password" value={this.state.password} onChange={this.onChange} placeholder="Password" /><br/>                                
                                 <button id="signup-btn" onClick={this.handleSignUp}>Signup</button>
-                                {this.state.validationError? <p className="valid-error">{this.state.validationError}</p> : <p className="valid-error">{this.state.error}</p>}
                             </div>
                         </form>
+                        {this.state.error !== ''? <p className="error-message" style={{color: "red", fontSize: "16px"}}>{this.state.error}</p> : ''}
+                        {this.state.successMessage !== ''? <span><p className="success-message" style={{color: "green", fontSize: "16px"}}>{this.state.successMessage}</p><a href="/login">Login</a></span> : ''}
                     </div>
                 </div>
             </React.Fragment>

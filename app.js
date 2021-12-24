@@ -1,42 +1,38 @@
-const api = require('./server/api/api')
-const db = require('./server/db/db')
-
+const express = require('express')
+const { connectDB, getClient } = require('./server/db/db')
+const session = require('express-session')
 const genuuid = require('uuid').v4;
-const MongoStore = require('connect-mongo')
+const MongoStore = require('connect-mongo');
 const path = require('path');
 
-const session = require('express-session')
-const express  = require('express');
-
 const app = express();
-
 const port = process.env.PORT || 4000;
+const api = require('./server/api/api')
 
+connectDB()
+.then(() => {
 
-db.connectDB()
-.then(()=>{
-
-    app.use('/api', express.json());
-
+    //Handle /api with the api middleware
+    app.use(express.json());
     app.use('/api', session({
-        genid(){
-            return genuuid();
+        genid() {
+            return genuuid() // use UUIDs for session IDs
         },
-        store: new MongoStore({ client: db.getClient() }),
-        secret: 'qwertyuiop',
+        store: new MongoStore({ client: getClient() }),
+        secret: 'secret',
         resave: false,
-        saveUninitialized: true
+        saveUninitialized: true,
     }), api);
 
     app.use(express.static(path.join(__dirname, 'build')));
 
-    app.get('*', (req, res, next)=>{
-        res.sendFile(path.join(__dirname, 'build', 'index.html'));
-    })
+    //Return index.html for routes not handled by build folder
+    app.get('*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    });
 
-    app.listen(port, ()=>{
-        console.log(`Server listening at port: ${port}`);
-    })
-
+    //Start listening on port
+    app.listen(port, () => {
+        console.log(`Server listening on port: ${port}`);
+    });
 })
-

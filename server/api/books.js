@@ -18,7 +18,9 @@ router.get('/', (req, res, next)=>{
             for(const i in bookList){
                 await Review.findOne( {bookId: bookList[i].bookId, userId: userId}, {rating: 1, review: 1} )
                 .then(review=>{
-                    bookList[i].userReview = review;
+                    if(review!=null){
+                        bookList[i].userReview = review;
+                    }
                 })
                 .catch(()=>{})
             }
@@ -40,18 +42,20 @@ router.get('/:bookId', (req, res, next)=>{
     }
 
     const bookId = req.params.bookId;
-    Book.findOne( {bookId: bookId} )
-    .then(book=>{
-        if(!book){
+    Book.findOne({ bookId: bookId })
+    .then(async book=>{
+        if(book === null){
             res.status(400).send({error: 'Invalid bookId'});
             return;
         }
-        const bookData = book;
+        const bookData = Object.assign({}, book.toJSON());
         if(req.session.userId !== undefined){
             const userId = req.session.userId;
-            Review.findOne( {bookId: bookData.bookId, userId: userId}, {rating: 1, review: 1} )
+            await Review.findOne( {bookId: bookData.bookId, userId: userId}, {rating: 1, review: 1} )
             .then(review=>{
-                bookData.userReview = review;
+                if(review!==null){
+                    bookData.userReview = review;
+                }
             })
         }
         res.status(200).send({bookData: bookData});

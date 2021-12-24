@@ -4,7 +4,6 @@ const session = require('express-session')
 const genuuid = require('uuid').v4;
 const MongoStore = require('connect-mongo');
 const path = require('path');
-const Book = require('./server/db/models/books')
 
 const app = express();
 const port = process.env.PORT || 4000;

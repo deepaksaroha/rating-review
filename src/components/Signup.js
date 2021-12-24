@@ -11,7 +11,8 @@ class Signup extends React.Component{
             emailId: '',
             password: '',
             error: '',
-            successMessage: ''
+            successMessage: '',
+            isLoggedIn: false
         }
     }
 

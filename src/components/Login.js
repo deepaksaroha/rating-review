@@ -17,9 +17,6 @@ class Login extends React.Component{
     checkLoginStatus = async () => {
         axios.get('/api/users')
         .then(response=>{
-            this.setState({
-                isLoggedIn: true
-            })
             this.props.history.goBack();
         })
         .catch(error=>{

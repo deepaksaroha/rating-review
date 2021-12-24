@@ -19,9 +19,6 @@ class Signup extends React.Component{
     checkLoginStatus = async () => {
         axios.get('/api/users')
         .then(response=>{
-            this.setState({
-                isLoggedIn: true
-            })
             this.props.history.replace('/home');
         })
         .catch(error=>{

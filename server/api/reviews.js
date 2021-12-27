@@ -43,10 +43,18 @@ router.post('/', (req, res, next)=>{
             }
             return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating, ratingCount: newRatingCount, reviewCount: newReviewCount })
         }else if(oldReview.rating !== newRating || oldReview.review !== newReview){
-            const newAvgRating = (book.avgRating*book.ratingCount - oldReview.rating + newRating)/book.ratingCount;
+            let newAvgRating = oldReview.avgRating;
+            if(oldReview.rating !== newRating){
+                newAvgRating = (book.avgRating*book.ratingCount - oldReview.rating + newRating)/book.ratingCount;
+            }
             let reviewCount = book.reviewCount;
-            if(oldReview.review === ''){
-                reviewCount = book.reviewCount + 1;
+            if(oldReview.review !== newReview){
+                if(oldReview.review === ""){
+                    reviewCount = book.reviewCount + 1;
+                }
+                if(newReview === ""){
+                    reviewCount = book.reviewCount - 1;
+                }
             }
             return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating, reviewCount: reviewCount })
         }

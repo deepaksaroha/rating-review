@@ -37,7 +37,10 @@ router.post('/', (req, res, next)=>{
         if(oldReview === null){
             const newAvgRating = (book.avgRating*book.ratingCount + newRating)/(book.ratingCount + 1);
             const newRatingCount = book.ratingCount+1;
-            const newReviewCount = book.reviewCount+( newReview ===''? 0 : 1 );
+            let newReviewCount = book.reviewCount;
+            if(newReview !== ''){
+                newReviewCount = book.reviewCount+1;
+            }
             return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating, ratingCount: newRatingCount, reviewCount: newReviewCount })
         }else if(oldReview.rating !== newRating){
             const newAvgRating = (book.avgRating*book.ratingCount - oldReview.rating + newRating)/book.ratingCount;

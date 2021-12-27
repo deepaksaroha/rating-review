@@ -42,9 +42,13 @@ router.post('/', (req, res, next)=>{
                 newReviewCount = book.reviewCount+1;
             }
             return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating, ratingCount: newRatingCount, reviewCount: newReviewCount })
-        }else if(oldReview.rating !== newRating){
+        }else if(oldReview.rating !== newRating || oldReview.review !== newReview){
             const newAvgRating = (book.avgRating*book.ratingCount - oldReview.rating + newRating)/book.ratingCount;
-            return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating })
+            let reviewCount = book.reviewCount;
+            if(oldReview.review === ''){
+                reviewCount = book.reviewCount + 1;
+            }
+            return Book.updateOne({ bookId: bookId }, { avgRating: newAvgRating, reviewCount: reviewCount })
         }
     })
     .then((result)=>{

@@ -14,7 +14,8 @@ class Book extends React.Component{
             newReview: '',
             bookReviews: [],
             isLoggedIn: false,
-            isEdit: false
+            isEdit: false,
+            isLoaded: false,
         }
     }
 
@@ -37,12 +38,14 @@ class Book extends React.Component{
         promise2
         .then(response=>{
             this.setState({
-                isLoggedIn: true
+                isLoggedIn: true,
+                isLoaded: true
             })
         })
         .catch(error=>{
             this.setState({
-                isLoggedIn: false
+                isLoggedIn: false,
+                isLoaded: true
             })
             console.log('Error Occured')
         })
@@ -108,6 +111,11 @@ class Book extends React.Component{
         const book = this.state.bookData;
         return(
             <React.Fragment>
+            {
+                !this.state.isLoaded?
+                ''
+                :
+                <div>
                 <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
                 <div className="book-outer-box">
                     {
@@ -224,6 +232,8 @@ class Book extends React.Component{
                     }
                     
                 </div>
+                </div>
+            }
             </React.Fragment>
         )
     }

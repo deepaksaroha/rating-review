@@ -41,6 +41,9 @@ class Book extends React.Component{
             })
         })
         .catch(error=>{
+            this.setState({
+                isLoggedIn: false
+            })
             console.log('Error Occured')
         })
     }

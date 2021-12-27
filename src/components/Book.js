@@ -87,7 +87,7 @@ class Book extends React.Component{
 
     handleLogout =()=>{
         axios.delete('/api/users')
-        .then((response)=>{
+        .then(()=>{
             this.getData();
         })
         .catch(error=>{
@@ -102,7 +102,6 @@ class Book extends React.Component{
     }
 
     render(){
-        console.log(this.state.bookReviews);
         const book = this.state.bookData;
         return(
             <React.Fragment>

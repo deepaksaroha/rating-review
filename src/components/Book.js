@@ -88,9 +88,7 @@ class Book extends React.Component{
     handleLogout =()=>{
         axios.delete('/api/users')
         .then((response)=>{
-            this.setState({
-                isLoggedIn: false
-            })
+            this.getData();
         })
         .catch(error=>{
             console.log('some issue occured')

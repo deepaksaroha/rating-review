@@ -7,6 +7,10 @@ const bookSchema = new Schema({
         type: String,
         required: true
     },
+    thumbnailUrl: {
+        type: String,
+        default: "/defaultbookthumbnail.png"
+    },
     bookId:{
         type: String,
         required: true,

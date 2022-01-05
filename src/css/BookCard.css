@@ -1,0 +1,85 @@
+body{
+    margin: 0;
+}
+
+.book-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid grey;
+    /* border-radius: 10px; */
+    font-size: 28px;
+    margin: 10px 0;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+
+.desc-box{
+    padding: 10px;
+    min-width: 5em;
+}
+
+.book-title{
+    font-size: 0.6em;
+    margin: inherit;
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.book-title:hover{
+    position: relative;
+    overflow: visible;
+}
+
+.book-author{
+    font-size: 0.4em;
+    margin: inherit;
+}
+
+.rating-info{
+    font-size: 0.5em;
+}
+
+.rating-info div{
+    font-size: 1.5em;
+}
+
+.rating-info p{
+    margin: inherit;
+}
+
+.book-desc{
+    height: 100px;
+    font-size: 0.5em;
+    font-style: italic;
+    overflow: hidden;
+}
+
+.thumbnail-box{
+    height: 155px;
+    width: 120px;
+    position: relative;
+}
+
+.book-thumbnail{
+    height: 100%;
+    width: 100%;
+}
+
+.user-rating{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(59, 190, 140, 0.65);
+}
+
+.user-rating div div{
+    font-size: 0.6em;
+}
+
+.detail-box{
+    padding: 10px;
+    min-width: fit-content;
+    font-size: 0.4em;
+}
+
+

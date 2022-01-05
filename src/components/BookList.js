@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import BookCard from './BookCard';
 
-import '../css/BookTile.css'
+import '../css/BookList.css'
 
 class BookList extends React.Component {
     constructor(props){
@@ -45,6 +45,7 @@ class BookList extends React.Component {
         return (
             <React.Fragment>
                 <main>
+                <div className="book-list">
                 {
                     this.state.books.map((book, index)=>{
                         return(
@@ -54,6 +55,7 @@ class BookList extends React.Component {
                         )
                     })
                 }
+                </div>
                 </main>
             </React.Fragment>
         )

@@ -1,6 +1,7 @@
 import React from 'react'
 import Star from './Star'
 import axios from 'axios'
+import '../css/BookCard.css'
 
 class BookCard extends React.Component{
     constructor(props){
@@ -42,7 +43,7 @@ class BookCard extends React.Component{
         const book = this.props.book;
         return (
             <React.Fragment>
-                <div className='books' style={{backgroundColor: 'whitesmoke', border: '1px solid black'}} key={book.bookId} value={book.bookId} onClick={()=>this.handleBookClick(book.bookId)}>
+                <div className='books' key={book.bookId} value={book.bookId} onClick={()=>this.handleBookClick(book.bookId)}>
                     <div className='book-container'>
                         <div className="desc-box">
                             <div className="book-heading-box">
@@ -52,17 +53,17 @@ class BookCard extends React.Component{
                                 </div>
                                 <div className="rating-info">
                                     <Star rating={parseInt(book.avgRating)} changeRating={()=>{}}/>
-                                    <p>{book.ratingCount} Ratings</p>&nbsp;
+                                    <p>{book.ratingCount} Ratings</p>
                                     <p>{book.reviewCount} Reviews</p>
                                 </div>
                             </div>
-                            <div className="book-desc">
+                            {/* <div className="book-desc">
                                 {book.description}
-                            </div>
+                            </div> */}
                         </div>
                         
                         <div className="thumbnail-box">
-                            <img className="book-thumbnail" src={book.thumbnailUrl} alt='bookImg' />
+                            <img className="book-thumbnail" src={book.thumbnailUrl || '/images/defaultbookthumbnail.png'} alt='bookImg' />
                             <div className="user-rating" onMouseEnter={()=>{this.setState({focus:true})}} onMouseLeave={()=>{this.setState({focus:false})}}>
                                 {
                                     this.props.loginStatus ?

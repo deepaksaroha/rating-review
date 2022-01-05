@@ -1,9 +1,10 @@
 import React from 'react'
 import Navbar from './Navbar';
 import '../css/Book.css'
-import Book1 from '../images/kite.jpg'
+// import Book1 from '../images/kite.jpg'
 import axios from 'axios'
 import Star from './Star'
+const path = require('path');
 
 class Book extends React.Component{
     constructor(props){
@@ -122,7 +123,7 @@ class Book extends React.Component{
                         Object.keys(book).length !== 0 ?
                         <div>
                         <div className="thumbnail-box">
-                            <img className="book-thumbnail" src={Book1} alt='bookImg' />
+                            <img className="book-thumbnail" src={path.join(__dirname, 'build', book.thumbnailUrl)} alt='bookImg' />
                         </div>
                         <div>
                             <div className="book-detail-box">

@@ -69,6 +69,7 @@ body{
     width: 100%;
     position: absolute;
     bottom: 0;
+    background-color: rgba(59, 190, 140, 0.65);
 }
 
 .user-rating div div{

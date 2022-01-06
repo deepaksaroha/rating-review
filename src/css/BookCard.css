@@ -6,11 +6,11 @@ body{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border: 1px solid grey;
-    /* border-radius: 10px; */
     font-size: 28px;
     margin: 10px 0;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
+    max-width: 400px;
 }
 
 .desc-box{
@@ -82,4 +82,8 @@ body{
     font-size: 0.4em;
 }
 
-
+@media screen and (max-width: 1000px) {
+    .book-container{
+        max-width: 400px;
+    }
+}

@@ -17,10 +17,13 @@ body{
 }
 
 @media screen and (max-width: 1000px) {
-    body{
-        margin: 0 40px;
-    }
     .book-list{
         grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .book-list{
+        margin: 10px;
     }
 }

@@ -115,3 +115,11 @@ body{
 .rate-box{
     cursor: default;
 }
+
+@media screen and (max-width: 500px) {
+    .login-btn{
+        font-size: 12px;
+        padding: 5px;
+    }
+
+}

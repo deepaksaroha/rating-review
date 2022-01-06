@@ -38,6 +38,7 @@ body{
 
 .rating-info{
     font-size: 0.5em;
+    margin-top: 20px;
 }
 
 .rating-info div{
@@ -45,7 +46,7 @@ body{
 }
 
 .rating-info p{
-    margin: inherit;
+    margin: unset;
 }
 
 .book-desc{
@@ -70,9 +71,9 @@ body{
 }
 
 .user-rating{
-    width: 100%;
+    width: calc(100% - 20px);
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     background-color: rgba(59, 190, 140, 0.65);
 }
 

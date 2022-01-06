@@ -5,12 +5,13 @@ body{
 .book-container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    border: 1px solid grey;
     font-size: 28px;
     margin: 10px 0;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     padding: 10px;
-    max-width: 400px;
+    max-width: fit-content;
+    background-color: rgba(230, 230, 230, 0.493);
+    border-radius: 10px;
 }
 
 .desc-box{
@@ -58,6 +59,9 @@ body{
     height: 155px;
     width: 120px;
     position: relative;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid rgb(206, 206, 206);
 }
 
 .book-thumbnail{
@@ -79,11 +83,28 @@ body{
 .detail-box{
     padding: 10px;
     min-width: fit-content;
-    font-size: 0.4em;
+    font-size: 0.45em;
 }
 
 @media screen and (max-width: 1000px) {
     .book-container{
         max-width: 400px;
     }
+
+}
+
+@media screen and (max-width: 500px) {
+    .book-container{
+        grid-template-columns: 1fr 1fr;
+        max-width: 400px;
+        font-size: 22px;
+    }
+    .detail-box{
+        display: none;
+    }
+    .thumbnail-box{
+        height: 120px;
+        width: 95px;
+    }
+
 }

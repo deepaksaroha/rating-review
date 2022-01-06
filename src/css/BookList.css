@@ -3,9 +3,27 @@ body{
 }
 
 .book-list{
-    width: 80%;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;  
     gap: 20px;
+    width: fit-content;
+}
+
+@media screen and (max-width: 1400px) {
+    .book-list{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .book-list{
+        grid-template-columns: 1fr;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .book-list{
+        margin: 10px;
+    }
 }

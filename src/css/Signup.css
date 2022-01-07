@@ -73,8 +73,19 @@ h2{
     max-width: 400px;
 }
 
+@media screen and (max-width: 1000px) {
+    #signup-heading{
+        font-size: 1.5em;
+    }
+
+    .signup-input-box{
+        font-size: 1em;
+    }
+}
+
 @media screen and (max-width: 650px) {
     .outer-box{
+        width: 90%;
         margin: 10vh auto;
         font-size: 20px;
         grid-template-columns: 1fr;
@@ -84,7 +95,8 @@ h2{
         font-size: 1em;
     }
     .signup-form-box{
-        width: 80%;
+        max-width: 300px;
+        width: 100%;
         margin: 0 auto;
     }
     .signup-input-box{
@@ -92,6 +104,10 @@ h2{
     }
     #signup-heading{
         margin:0;
+        font-size: 1em;
+    }
+    .signup-input-box{
+        font-size: 0.8em;
     }
 
 }

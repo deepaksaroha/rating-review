@@ -89,7 +89,7 @@ body{
 
 @media screen and (max-width: 1000px) {
     .book-container{
-        max-width: 400px;
+        max-width: fit-content;
     }
 
 }
@@ -97,7 +97,7 @@ body{
 @media screen and (max-width: 500px) {
     .book-container{
         grid-template-columns: 1fr 1fr;
-        max-width: 400px;
+        max-width: fit-content;
         font-size: 22px;
     }
     .detail-box{

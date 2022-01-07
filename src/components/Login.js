@@ -92,7 +92,7 @@ class Login extends React.Component{
         return(
             <React.Fragment>
                 <Navbar loginStatus={this.state.isLoggedIn} handleLogout={this.handleLogout} />
-                <div className="outer-box">
+                <div className="login-outer-box">
                     <div className="login-form-box">
                         <form>
                             <p id="login-heading">User Login</p>

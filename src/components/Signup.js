@@ -124,7 +124,7 @@ class Signup extends React.Component{
                 <div className="outer-box">
                     <h2>“Show me a family of readers, and I will show you the people who move the world.” – Napoleon Bonaparte</h2>
                     <div className="signup-form-box">
-                        <form>
+                        <form className="form-box">
                             <p id="signup-heading">User SignUp</p>
                             <div className="signup-input-box">
                                 <label>User Name: </label><br/>

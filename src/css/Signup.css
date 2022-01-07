@@ -3,21 +3,22 @@ body{
 }
 
 .outer-box{
-    width: 80%;
+    width: 70%;
     margin: 20vh auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 50px;
     align-items: center;
+    font-size: 1.7vw;
 }
 
 .signup-form-box{
-    width: fit-content;
+    width: 90%;
 }
 
 #signup-heading{
     border-radius: 10px 10px 0 0;
-    padding: 20px;
+    padding: 0.5em;
     font-size: 1em;
     color: white;
     margin: 0 0 15px 0;
@@ -27,7 +28,7 @@ body{
 }
 
 .signup-input-box{
-    padding: 20px;
+    padding: 1.5vw;
     font-size: 0.8em;
     border: 1px solid grey;
 }
@@ -37,10 +38,10 @@ body{
     outline: none;
     border: 1px solid rgb(197, 197, 197);
     border-radius: 5px;
-    font-size: 0.7em;
-    padding: 5px;
+    font-size: 0.8em;
+    padding: 0.5vw;
     height: 2em;
-    width: 400px;
+    width: 90%;
     margin-bottom: 10px;
 }
 
@@ -49,10 +50,10 @@ body{
     outline: none;
     border-radius: 5px;
     background-color: rgb(39, 26, 26);
-    font-size: 20px;
+    font-size: 1em;
     color: white;
-    padding: 10px 18px;
-    margin-top: 20px;
+    padding: 0.8vw 1.6vw;
+    margin-top: 1vw;
 }
 
 label{
@@ -70,4 +71,17 @@ h2{
     max-height: 1.5em;
     font-size: 0.8em;
     max-width: 400px;
+}
+
+@media screen and (max-width: 650px) {
+    .outer-box{
+        margin: 10vh auto;
+        font-size: 16px;
+        grid-template-columns: 1fr;
+    }
+    .signup-form-box{
+        width: 80%;
+        border-radius: 10px 10px;
+    }
+
 }

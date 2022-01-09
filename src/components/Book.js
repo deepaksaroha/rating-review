@@ -205,10 +205,10 @@ class Book extends React.Component{
                                 {book.description}
                             </p>
                         </div>
-                        <div className="book-avail-options">
-                            <button id="x" disabled={'availability' in book && !book.availability.amazon}>Amazon</button>
-                            <button id="y" disabled={'availability' in book && !book.availability.flipkart}>Flipkart</button>
-                            <button id="z" disabled={'availability' in book && !book.availability.kindle}>Kindle</button>                        
+                        <div className="book-avail-options">available at -
+                            {'availability' in book && book.availability.amazon ? <span className="x">Amazon</span>:null}
+                            {'availability' in book && book.availability.flipkart ? <span className="x">Flipkart</span>:null}
+                            {'availability' in book && book.availability.kindle ? <span className="x">Kindle</span>: null}
                         </div>
                         </div>
                         :

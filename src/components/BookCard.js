@@ -14,9 +14,10 @@ class BookCard extends React.Component{
     }
 
     changeRating = (newRating)=>{
+        console.log(newRating);
         this.setState({
             newRating: newRating
-        })
+        }, this.submitRating);
     }
 
     submitRating = () =>{
@@ -76,14 +77,10 @@ class BookCard extends React.Component{
                                                 :
                                                 <div>
                                                     <Star rating={this.state.newRating} changeRating={this.changeRating} />
-                                                    <button onClick={this.submitRating}>Done</button>
-                                                    <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                                 </div>
                                             :
                                             <div>
                                                 <Star rating={this.state.newRating} changeRating={this.changeRating} />
-                                                <button onClick={this.submitRating}>Done</button>
-                                                <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                             </div>
                                         :
                                         ''

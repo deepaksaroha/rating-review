@@ -122,83 +122,89 @@ class Book extends React.Component{
                     {
                         Object.keys(book).length !== 0 ?
                         <div>
-                        <div className="thumbnail-box">
-                            <img className="book-thumbnail" src={path.join(__dirname, 'build', book.thumbnailUrl)} alt='bookImg' />
-                        </div>
                         <div>
                             <div className="book-detail-box">
-                                <div>
-                                    <div>
-                                        <Star loginStatus={this.state.isLoggedIn} rating={book.avgRating} changeRating={(v)=>{}}/>
+                                <div className="book-page-thumbnail-box">
+                                    <img className="book-page-thumbnail" src={path.join(__dirname, 'build', book.thumbnailUrl)} alt='bookImg' />
+                                </div>                                
+                                <div className="box-1">
+                                    <div className="about-book-box">
+                                        <div>
+                                            <p id="book-page-title">{book.title}</p>
+                                            <p id="book-page-author">by-{book.author}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        {book.ratingCount} Ratings
-                                    </div>
-                                    <div>
-                                        {book.reviewCount} Reviews
-                                    </div>
-                                </div>
-                                <div className="about-book">
-                                    <div>
-                                        <p id="book-title">{book.title}</p>&nbsp;
-                                        <p id="book-author">by-{book.author}</p>
-                                    </div>
-                                    <p id="book-desc">
-                                        {book.description}
-                                    </p>
-                                </div>
-                                <div>
-                                    <div className="detail-box">
-                                        <p>edition: {book.edition}</p>
-                                        <p>published: {book.published}</p>
-                                        <p>ISBN: {book.isbn}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="user-review">
-                                <div>
-                                    {
-                                        this.state.isLoggedIn ?
-                                            book.userReview !== undefined ?
-                                                !this.state.isEdit ?
-                                                    <div>
-                                                        <div className="rate-box">
-                                                            <Star loginStatus={this.state.isLoggedIn} rating={book.userReview.rating} changeRating={()=>{}}/>
-                                                        </div>
-                                                        <div>
-                                                            <div className="user-review-box">{book.userReview.review}</div>
-                                                        </div>
-                                                        <button className="book-modify-btn" onClick={this.handleEdit}>Edit</button>
-                                                    </div>
-                                                    :
-                                                    <div>
-                                                        <div className="rate-box">
-                                                            <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
-                                                            <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
-                                                        </div>
-                                                        <div>
-                                                            <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
-                                                        </div>
-                                                        <button className="book-modify-btn" onClick={this.handleSubmitReview}>Done</button><button className="book-modify-btn" onClick={this.handleEditCancel}>Cancel</button>
-                                                    </div>
-                                                :
-                                                <div>
-                                                    <div className="rate-box">
-                                                        <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
-                                                        <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
-                                                    </div>
-                                                    <div>
-                                                        <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
-                                                    </div>
-                                                    <button className="book-modify-btn" onClick={this.handleSubmitReview}>Submit</button>
-                                                </div>
-                                            :
+                                    <div className="box-2">
+                                        <div>
                                             <div>
-                                                <a className="login-btn" href="/login" >Login to Review</a>
+                                                <div>
+                                                    <Star loginStatus={this.state.isLoggedIn} rating={book.avgRating} changeRating={(v)=>{}}/>
+                                                </div>
+                                                <div>
+                                                    {book.ratingCount} Ratings
+                                                </div>
+                                                <div>
+                                                    {book.reviewCount} Reviews
+                                                </div>
                                             </div>
-                                    }
+                                            <div className="book-page-user-review">
+                                                <div>
+                                                    {
+                                                        this.state.isLoggedIn ?
+                                                            book.userReview !== undefined ?
+                                                                !this.state.isEdit ?
+                                                                    <div>
+                                                                        <div className="rate-box">
+                                                                            <Star loginStatus={this.state.isLoggedIn} rating={book.userReview.rating} changeRating={()=>{}}/>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div className="user-review-box">{book.userReview.review}</div>
+                                                                        </div>
+                                                                        <button className="book-modify-btn" onClick={this.handleEdit}>Edit</button>
+                                                                    </div>
+                                                                    :
+                                                                    <div>
+                                                                        <div className="rate-box">
+                                                                            <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
+                                                                            <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
+                                                                        </div>
+                                                                        <div>
+                                                                            <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
+                                                                        </div>
+                                                                        <button className="book-modify-btn" onClick={this.handleSubmitReview}>Done</button><button className="book-modify-btn" onClick={this.handleEditCancel}>Cancel</button>
+                                                                    </div>
+                                                                :
+                                                                <div>
+                                                                    <div className="rate-box">
+                                                                        <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
+                                                                        <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
+                                                                    </div>
+                                                                    <div>
+                                                                        <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
+                                                                    </div>
+                                                                    <button className="book-modify-btn" onClick={this.handleSubmitReview}>Submit</button>
+                                                                </div>
+                                                            :
+                                                            <div>
+                                                                <div><a href="/login" ><button className="login-btn" >Login to Review</button></a></div>
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div className="book-page-detail-box">
+                                                <p>edition: {book.edition}</p>
+                                                <p>published: {new Date(book.published).toLocaleString().split(',')[0]}</p>
+                                                <p>ISBN: {book.isbn}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <p id="book-page-desc">
+                                {book.description}
+                            </p>
                         </div>
                         <div className="book-avail-options">
                             <button id="x" disabled={'availability' in book && !book.availability.amazon}>Amazon</button>
@@ -221,6 +227,7 @@ class Book extends React.Component{
                                                 <p>{review.userName}</p>
                                                 <Star rating={review.rating} changeRating={()=>{}} />
                                                 {review.review !== '' ?<p>{review.review}</p>:''}
+                                                <hr/>
                                             </div>
                                         }else{
                                             return ''

@@ -75,7 +75,8 @@ class Book extends React.Component{
 
     handleEditCancel = () =>{
         this.setState({
-            isEdit: false
+            isEdit: false,
+            newRating: 0
         })
     }
 
@@ -166,7 +167,6 @@ class Book extends React.Component{
                                                                     <div>
                                                                         <div className="rate-box">
                                                                             <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
-                                                                            <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                                                         </div>
                                                                         <div>
                                                                             <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>
@@ -177,7 +177,6 @@ class Book extends React.Component{
                                                                 <div>
                                                                     <div className="rate-box">
                                                                         <Star loginStatus={this.state.isLoggedIn} rating={this.state.newRating} changeRating={this.changeRating}/>
-                                                                        <button onClick={()=>{this.setState({newRating: 0})}}>Clear</button>
                                                                     </div>
                                                                     <div>
                                                                         <textarea className="user-review-box" name="newReview" value={this.state.newReview} onChange={this.handleChange} placeholder="Write your review here"></textarea>

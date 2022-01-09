@@ -64,6 +64,14 @@ body{
     margin: 0;
 }
 
+.book-modify-btn{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: rgb(61, 110, 202);
+    color: white;
+}
+
 @media screen and (max-width: 1000px) {
     .book-outer-box{
         width: 80%;

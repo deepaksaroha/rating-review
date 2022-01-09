@@ -25,7 +25,8 @@ body{
 #site-name{
     font-size: 1.5em;
     text-align: center;
-    color: rgb(56, 51, 51);
+    color: rgb(224 224 224);
+    font-family: fantasy;
 }
 
 #navbar-logout-btn, .login-btn{

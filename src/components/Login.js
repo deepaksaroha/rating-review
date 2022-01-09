@@ -10,7 +10,8 @@ class Login extends React.Component{
             isLoggedIn: false,
             emailId: '',
             password: '',
-            error: ''
+            error: null,
+            errorCode: null
         }
     }
 
@@ -39,7 +40,8 @@ class Login extends React.Component{
     validate=()=>{
         if(this.state.emailId === '' || this.state.password === ''){
             this.setState({
-                error: 'all fields are mandatory'
+                error: 'all fields are mandatory',
+                errorCode: null
             })
             return false
         }
@@ -48,7 +50,8 @@ class Login extends React.Component{
 
         if(!emRegex.test(this.state.emailId)){
             this.setState({
-                error: 'Email Id needs to be of the form abc@xyz.com'
+                error: 'Email Id needs to be of the form abc@xyz.com',
+                errorCode: null
             })
             return false
         }
@@ -68,7 +71,8 @@ class Login extends React.Component{
             })
             .catch(error=>{
                 this.setState({
-                    error: error.response.data.error
+                    error: error.response.data.error,
+                    errorCode: error.response.status
                 })
             })
         }
@@ -105,7 +109,14 @@ class Login extends React.Component{
                                 <button id="login-btn" onClick={this.handleLogin}>Login</button>
                             </div>
                         </form>
-                    { this.state.error !== '' ? <p style={{color: "red", fontSize: "16px"}}>{this.state.error}</p>:''}
+                    { this.state.error !== null ?
+                        <p style={{color: "red", fontSize: "16px"}}>
+                            {this.state.error}
+                            {this.state.errorCode === 401 ? <a href='/signup'>Signup</a>:null}
+                        </p>
+                        :
+                        ''
+                    }
                     </div>
                 </div>
             </React.Fragment>

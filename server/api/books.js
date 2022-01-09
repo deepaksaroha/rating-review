@@ -24,8 +24,6 @@ router.get('/', (req, res, next)=>{
                 })
                 .catch(()=>{})
             }
-
-
         }
         res.status(200).send({bookList: bookList});
     })
@@ -65,6 +63,7 @@ router.get('/:bookId', (req, res, next)=>{
         return;
     })
 })
+
 
 //change single book operation
 // router.patch('/:bookId', (req, res, next)=>{

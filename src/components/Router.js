@@ -4,6 +4,7 @@ import Book from './Book';
 import Login from './Login';
 import Signup from './Signup';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Footer from './Footer';
 
 class AppRouter extends React.Component {
     constructor(props){
@@ -25,6 +26,7 @@ class AppRouter extends React.Component {
                     <Route path='/login' component={Login} />
                     <Route path='/signup' component={Signup} />
                 </Switch>
+                <Footer />
             </Router>
             
         )

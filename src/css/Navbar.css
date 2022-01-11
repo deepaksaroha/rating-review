@@ -2,7 +2,14 @@ body{
     margin: 0;
 }
 
+#nav-margin-box{
+    font-size: 20px;
+    padding-top: 3.3em;
+}
+
 .navbar{
+    position: fixed;
+    width: 100%;
     display: grid;
     grid-template-columns: 2fr 3fr 2fr;
     font-size: 20px;
@@ -12,7 +19,9 @@ body{
     background-position: center;
     background-size: cover;
     font-size: 20px;
+    background-color: white;
 }
+
 .navbar>*{
     margin: 0px 20px;
 }
@@ -60,6 +69,10 @@ body{
     }
     .logout-btn-box{
         text-align: start;
+    }
+
+    #nav-margin-box{
+        font-size: 12px;
     }
 
 }

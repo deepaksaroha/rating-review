@@ -108,8 +108,8 @@ body{
         display: block;
     }
 
-    .box-2, #book-page-desc, #book-page-author, #book-page-title, .all-reviews{
-        font-size: initial;
+    .box-2, #book-page-desc, #book-page-author, #book-page-title, .all-reviews, .book-avail-options{
+        font-size: 2.5em;
     }
 
     .box-1, .box-2{ 

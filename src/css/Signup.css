@@ -13,12 +13,12 @@ body{
 }
 
 .signup-form-box{
-    width: 90%;
+    width: 80%;
 }
 
 #signup-heading{
     border-radius: 10px 10px 0 0;
-    padding: 0.5em;
+    padding: 0.4em;
     font-size: 1em;
     color: white;
     margin: 0 0 15px 0;
@@ -28,7 +28,7 @@ body{
 }
 
 .signup-input-box{
-    padding: 1.5vw;
+    padding: 1.2vw;
     font-size: 0.8em;
     border: 1px solid grey;
 }
@@ -39,7 +39,7 @@ body{
     border: 1px solid rgb(197, 197, 197);
     border-radius: 5px;
     font-size: 0.8em;
-    padding: 0.5vw;
+    padding: 0.2vw;
     height: 2em;
     width: 90%;
     margin-bottom: 10px;
@@ -52,7 +52,7 @@ body{
     background-color: rgb(39, 26, 26);
     font-size: 1em;
     color: white;
-    padding: 0.8vw 1.6vw;
+    padding: 0.5vw 1.6vw;
     margin-top: 1vw;
 }
 

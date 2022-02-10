@@ -12,7 +12,7 @@ class Star extends React.Component{
     }
 
     emptyStarElement = (index) => {
-        return <div style={{display: "inline-block", color: "grey"}} key={index} id={index} onClick={this.changeRating}>&#9733;</div>
+        return <div style={{display: "inline-block", color: "black"}} key={index} id={index} onClick={this.changeRating}>&#9734;</div>
     }
 
     render(){

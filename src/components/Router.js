@@ -7,14 +7,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Footer from './Footer';
 
 class AppRouter extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            
-        }
-    }
-
-
 
     render(){
         return (

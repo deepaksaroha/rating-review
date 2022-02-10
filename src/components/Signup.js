@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../css/Signup.css'
 import axios from 'axios';
@@ -138,7 +139,7 @@ class Signup extends React.Component{
                             </div>
                         </form>
                         {this.state.error !== ''? <p className="error-message" style={{color: "red", fontSize: "16px"}}>{this.state.error}</p> : ''}
-                        {this.state.successMessage !== ''? <span><p className="success-message" style={{color: "green", fontSize: "16px"}}>{this.state.successMessage}</p><a href="/login">Login</a></span> : ''}
+                        {this.state.successMessage !== ''? <span><p className="success-message" style={{color: "green", fontSize: "16px"}}>{this.state.successMessage}</p><Link to="/login">Login</Link></span> : ''}
                     </div>
                 </div>
             </React.Fragment>

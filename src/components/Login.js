@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom'
 import Navbar from './Navbar';
 import '../css/Login.css'
 import axios from 'axios';
@@ -112,7 +113,7 @@ class Login extends React.Component{
                     { this.state.error !== null ?
                         <p style={{color: "red", fontSize: "16px"}}>
                             {this.state.error}
-                            {this.state.errorCode === 401 ? <a href='/signup'>Signup</a>:null}
+                            {this.state.errorCode === 401 ? <Link to='/signup'>Signup</Link>:null}
                         </p>
                         :
                         ''

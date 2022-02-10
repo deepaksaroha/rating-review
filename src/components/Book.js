@@ -1,11 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import '../css/Book.css'
 // import Book1 from '../images/kite.jpg'
 import axios from 'axios'
 import Star from './Star'
 const path = require('path');
-
 class Book extends React.Component{
     constructor(props){
         super(props);
@@ -185,7 +185,8 @@ class Book extends React.Component{
                                                                 </div>
                                                             :
                                                             <div>
-                                                                <div><a href="/login" ><button className="login-btn" >Login to Review</button></a></div>
+                                                                {/* <div><a href="/login" ><button className="login-btn" >Login to Review</button></a></div> */}
+                                                                <div><Link to="/login" ><button className="login-btn" >Login to Review</button></Link></div>
                                                             </div>
                                                     }
                                                 </div>

@@ -11,6 +11,8 @@ const api = require('./server/api/api')
 
 connectDB()
 .then(() => {
+    
+    console.log('some thing is happening');
 
     //Handle /api with the api middleware
     app.use(express.json());

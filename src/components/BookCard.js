@@ -49,7 +49,9 @@ class BookCard extends React.Component{
                         <div className="desc-box">
                             <div className="book-heading-box">
                                 <div>
-                                    <p className="book-title">{book.title}</p>
+                                    <p className="book-title">
+                                        <p className='book-title-expand'>{book.title}</p>
+                                    </p>
                                     <p className="book-author">by-{book.author}</p>
                                 </div>
                                 <div className="rating-info">
@@ -64,7 +66,12 @@ class BookCard extends React.Component{
                         </div>
                         
                         <div className="thumbnail-box">
-                            <img className="book-thumbnail" src={book.thumbnailUrl || '/images/defaultbookthumbnail.png'} alt='bookImg' />
+                            {
+                                this.props.index === 0 ?
+                                <img className="book-thumbnail" src={book.thumbnailUrl || '/images/defaultbookthumbnail.png'} alt='bookImg' loading='lazy' /> :
+                                <img className="book-thumbnail" data-src={book.thumbnailUrl || '/images/defaultbookthumbnail.png'} alt='bookImg' loading='lazy' />
+                            }
+                            
                             <div className="user-rating" onMouseEnter={()=>{this.setState({focus:true})}} onMouseLeave={()=>{this.setState({focus:false})}}>
                                 {
                                     this.props.loginStatus ?

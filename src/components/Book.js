@@ -126,7 +126,7 @@ class Book extends React.Component{
                         <div>
                             <div className="book-detail-box">
                                 <div className="book-page-thumbnail-box">
-                                    <img className="book-page-thumbnail" src={path.join(__dirname, 'build', book.thumbnailUrl)} alt='bookImg' />
+                                    <img className="book-page-thumbnail" src={path.join(__dirname, 'build', book.thumbnailUrl)} alt='bookImg' loading='lazy'/>
                                 </div>                                
                                 <div className="box-1">
                                     <div className="about-book-box">
